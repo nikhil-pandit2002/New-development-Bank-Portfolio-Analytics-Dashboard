@@ -205,6 +205,25 @@ canvas { max-height: 265px; }
 .tag-g { background: var(--g7); color: var(--g1); }
 .tag-l { background: #E8F5D4; color: #3A6010; }
 
+/* ─── PROJECT LIST (Country Analysis) ────────────── */
+.pl-head { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+.pl-count { font-size:11px; color:var(--text2); font-weight:600; }
+.plt { width:100%; border-collapse:collapse; font-size:12px; }
+.plt th { background:var(--g1); color:#fff; padding:9px 12px; text-align:left; font-size:9.5px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600; }
+.plt td { padding:8px 12px; border-bottom:1px solid var(--g7); vertical-align:top; }
+.plt tr:hover td { background:var(--g7); }
+.plt .grp { background:var(--g2); }
+.plt .grp td { color:#fff; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:0.7px; padding:7px 12px; }
+.plt .ctry td { background:var(--lime); color:#1A2D1A; font-weight:800; font-size:11.5px; letter-spacing:0.4px; padding:8px 12px; }
+.plt .pname { font-weight:600; color:var(--text); }
+.plt .pfin { white-space:nowrap; font-weight:600; color:var(--g2); }
+.plt .pdate { white-space:nowrap; color:var(--text2); }
+.sbadge { display:inline-block; padding:2px 9px; border-radius:10px; font-size:9.5px; font-weight:700; white-space:nowrap; }
+.sb-approved  { background:#E3F0E8; color:#2B6B45; }
+.sb-completed { background:#DCEEF5; color:#1A6B8A; }
+.sb-proposed  { background:#FDEFD9; color:#B45309; }
+.sb-cancelled { background:#EEF1F4; color:#64748B; }
+
 /* ─── FOOTER ─────────────────────────────────────── */
 .footer {
   background: var(--g1); color: rgba(255,255,255,0.55);
@@ -234,6 +253,21 @@ canvas { max-height: 265px; }
   .header-pills { display: none; }
   .nav-btn { padding: 10px 11px; font-size: 11px; }
 }
+
+/* ─── INSIGHTS TAB ───────────────────────────────── */
+.ins-intro { font-size:11.5px; color:var(--text2); margin-bottom:14px; }
+.ins-grid { display:flex; gap:13px; flex-wrap:wrap; margin-bottom:18px; }
+.ins-card { background:var(--card); border-radius:8px; padding:15px 17px; flex:1 1 240px; min-width:240px; box-shadow:var(--sh); border-top:3px solid var(--g4); }
+.ins-card.a { border-top-color:var(--lime); }
+.ins-card.b { border-top-color:var(--g2); }
+.ins-card.c { border-top-color:var(--amber); }
+.ins-card.d { border-top-color:var(--g1); }
+.ins-topic { font-size:9.5px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.8px; }
+.ins-stat { font-size:22px; font-weight:800; color:var(--g1); margin:5px 0 5px; line-height:1.1; }
+.ins-text { font-size:11.5px; color:var(--text2); line-height:1.55; }
+.obs-i { padding:9px 0; border-bottom:1px solid var(--g7); font-size:12.5px; line-height:1.62; color:var(--text); }
+.obs-i:last-child { border-bottom:none; }
+.obs-i b { color:var(--g2); }
 </style>
 </head>
 <body>
@@ -250,16 +284,16 @@ canvas { max-height: 265px; }
 
   <div class="header-text">
     <div class="header-title">Portfolio Analytics Dashboard</div>
-    <div class="header-sub">160 Projects · 5 Founding + 4 Member Country · 2016–2026</div>
+    <div class="header-sub">163 Projects · 5 Founding + 4 Member Country · 2016–2026</div>
   </div>
 
   <div class="header-pills">
-    <div class="hpill"><div class="hpill-v">$43.4B</div><div class="hpill-l">Commitments</div></div>
-    <div class="hpill"><div class="hpill-v">94</div><div class="hpill-l">Active Projects</div></div>
-    <div class="hpill"><div class="hpill-v">46.3%</div><div class="hpill-l">Climate Share</div></div>
-    <div class="hpill"><div class="hpill-v">9 mo</div><div class="hpill-l">Median Velocity</div></div>
+    <div class="hpill"><div class="hpill-v" id="hp-ndb">$43.6B</div><div class="hpill-l">Commitments</div></div>
+    <div class="hpill"><div class="hpill-v" id="hp-active">116</div><div class="hpill-l">Active Projects</div></div>
+    <div class="hpill"><div class="hpill-v" id="hp-climate">47.2%</div><div class="hpill-l">Climate Share</div></div>
+    <div class="hpill"><div class="hpill-v" id="hp-vel">7 mo</div><div class="hpill-l">Median Velocity</div></div>
   </div>
-  <a class="dl-btn" href="NDB_Master_Data.xlsx" download>
+  <a class="dl-btn" href="NDB_Master_Data_163.xlsx" download>
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
     </svg>
@@ -277,7 +311,6 @@ canvas { max-height: 265px; }
   <button class="nav-btn" onclick="showPage('sovereign',this)">Sovereign Mix</button>
   <button class="nav-btn" onclick="showPage('lc',this)">Local Currency</button>
   <button class="nav-btn" onclick="showPage('velocity',this)">Approval Velocity</button>
-  <button class="nav-btn" onclick="showPage('russia',this)">Russia Portfolio</button>
   <button class="nav-btn" onclick="showPage('insights',this)">Strategic Insights</button>
 </div>
 
@@ -285,7 +318,7 @@ canvas { max-height: 265px; }
      FILTER BAR
 ══════════════════════════════════════════════════════════ -->
 <div class="filterbar">
-  <span class="fl">Country Filter</span>
+  <span class="fl">Country</span>
   <div class="ms-wrap" id="ms-wrap">
     <button class="ms-btn" id="ms-btn" onclick="toggleMsDropdown(event)">
       <span id="ms-label">All Member Countries</span>
@@ -304,8 +337,25 @@ canvas { max-height: 265px; }
       <label class="ms-option"><input type="checkbox" class="ms-cb" value="Bangladesh"   onchange="msChange()"> Bangladesh <span style="font-size:9px;color:var(--slate)">(New Member 2021)</span></label>
     </div>
   </div>
-  <button class="freset" onclick="resetFilter()">Clear Filter</button>
-  <span style="margin-left:6px;font-size:10.5px;color:#8aab8a">Select one or more countries to focus charts on that member's portfolio</span>
+  <span class="fl" style="margin-left:6px">Project Status</span>
+  <div class="ms-wrap" id="st-wrap">
+    <button class="ms-btn" id="st-btn" onclick="toggleStDropdown(event)" style="min-width:180px">
+      <span id="st-label">All Statuses</span>
+      <span class="ms-arrow">▾</span>
+    </button>
+    <div class="ms-dropdown" id="st-dropdown" style="min-width:180px">
+      <label class="ms-option">
+        <input type="checkbox" id="st-all" checked onchange="stToggleAll(this)"> All Statuses
+      </label>
+      <hr class="ms-divider">
+      <label class="ms-option"><input type="checkbox" class="st-cb" value="Approved"  onchange="stChange()"> Approved</label>
+      <label class="ms-option"><input type="checkbox" class="st-cb" value="Completed"  onchange="stChange()"> Completed</label>
+      <label class="ms-option"><input type="checkbox" class="st-cb" value="Proposed"   onchange="stChange()"> Proposed</label>
+      <label class="ms-option"><input type="checkbox" class="st-cb" value="Cancelled"  onchange="stChange()"> Cancelled</label>
+    </div>
+  </div>
+  <button class="freset" onclick="resetFilter()">Clear Filters</button>
+  <span style="margin-left:6px;font-size:10.5px;color:#8aab8a">Filter charts and the project list by member country and project status</span>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
@@ -315,32 +365,32 @@ canvas { max-height: 265px; }
   <div class="kpi-row">
     <div class="kpi k-dark">
       <div class="kpi-lbl">Total Projects</div>
-      <div class="kpi-val" id="kv-total-proj">160</div>
-      <div class="kpi-sub" id="ks-total-proj">All statuses across 6 member countries</div>
+      <div class="kpi-val" id="kv-total-proj">144</div>
+      <div class="kpi-sub" id="ks-total-proj">Excluding cancelled</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Active Projects</div>
-      <div class="kpi-val" id="kv-active-proj">94</div>
-      <div class="kpi-sub" id="ks-active-proj">Currently ongoing projects</div>
+      <div class="kpi-val" id="kv-active-proj">116</div>
+      <div class="kpi-sub" id="ks-active-proj">Excluding cancelled &amp; completed</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">NDB Commitments (USD Million)</div>
-      <div class="kpi-val" id="kv-ndb">$43,438</div>
-      <div class="kpi-sub" id="ks-ndb">Excl. 18 cancelled projects (142 active)</div>
+      <div class="kpi-val" id="kv-ndb">$43,634</div>
+      <div class="kpi-sub" id="ks-ndb">Excluding cancelled</div>
     </div>
     <div class="kpi k-lime">
       <div class="kpi-lbl">Climate Finance Share</div>
-      <div class="kpi-val" id="kv-climate" style="color:var(--lime)">46.3%</div>
+      <div class="kpi-val" id="kv-climate" style="color:var(--lime)">47.2%</div>
       <div class="kpi-sub" id="ks-climate">40% strategic target - exceeded</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Non-Sovereign (NS) Share</div>
-      <div class="kpi-val" id="kv-ns-share">25.6%</div>
+      <div class="kpi-val" id="kv-ns-share">26.4%</div>
       <div class="kpi-sub">Non-Sovereign lending share</div>
     </div>
     <div class="kpi k-amber">
       <div class="kpi-lbl">Local Currency Share</div>
-      <div class="kpi-val" id="kv-lc-share" style="color:var(--amber)">23.1%</div>
+      <div class="kpi-val" id="kv-lc-share" style="color:var(--amber)">23.5%</div>
       <div class="kpi-sub" id="ks-lc-share">Progressing toward 30% target</div>
     </div>
   </div>
@@ -350,7 +400,7 @@ canvas { max-height: 265px; }
   </div>
   <div class="row">
     <div class="cc"><div class="ct">Commitments by Sector (USD Million)</div><canvas id="c-sector-bar"></canvas></div>
-    <div class="cc"><div class="ct">Commitments by Member Country (USD Million)</div><canvas id="c-country-bar"></canvas></div>
+    <div class="cc"><div class="ct">NDB Commitments by Country (USD Million)</div><canvas id="c-country-bar"></canvas></div>
   </div>
 </div>
 
@@ -369,53 +419,28 @@ canvas { max-height: 265px; }
             <th>Climate Finance (%)</th><th>Local Currency (%)</th><th>Lending Mix</th>
           </tr>
         </thead>
-        <tbody id="country-tbody">
-          <tr data-country="Brazil">
-            <td><strong>Brazil</strong></td><td>35</td><td>$7,572.4</td><td>$67,985.5</td>
-            <td>59.4%</td><td>62.9%</td>
-            <td style="color:var(--amber);font-weight:700">8.6%</td>
-            <td><span class="tag tag-g">SOV 24</span> <span class="tag tag-l">NS 11</span></td>
-          </tr>
-          <tr data-country="China">
-            <td><strong>China</strong></td><td>41</td><td>$11,975.1</td><td>$44,113.1</td>
-            <td>44.8%</td><td>39.0%</td>
-            <td style="color:var(--g2);font-weight:700">65.9%</td>
-            <td><span class="tag tag-g">SOV 34</span> <span class="tag tag-l">NS 6</span></td>
-          </tr>
-          <tr data-country="India">
-            <td><strong>India</strong></td><td>42</td><td>$10,620.8</td><td>$24,443.9</td>
-            <td>50.2%</td><td>42.9%</td>
-            <td style="color:var(--amber);font-weight:700">2.4%</td>
-            <td><span class="tag tag-g">SOV 32</span> <span class="tag tag-l">NS 9</span></td>
-          </tr>
-          <tr data-country="Russia">
-            <td><strong>Russia</strong></td><td>18</td><td>$3,783.8</td><td>$17,278.7</td>
-            <td>47.1%</td><td>27.8%</td>
-            <td style="color:var(--slate);font-weight:700">0.0%</td>
-            <td><span class="tag tag-g">SOV 8</span> <span class="tag tag-l">NS 9</span></td>
-          </tr>
-          <tr data-country="South Africa">
-            <td><strong>South Africa</strong></td><td>19</td><td>$8,339.2</td><td>$23,609.5</td>
-            <td>48.2%</td><td>42.1%</td>
-            <td style="color:var(--g2);font-weight:700">31.6%</td>
-            <td><span class="tag tag-g">SOV 15</span> <span class="tag tag-l">NS 4</span></td>
-          </tr>
-          <tr data-country="Bangladesh" style="border-top:2px dashed var(--border)">
-            <td><strong>Bangladesh</strong> <small style="color:var(--slate);font-size:9px">New Member 2021</small></td><td>5</td><td>$1,147.0</td><td>$2,293.8</td>
-            <td>47.1%</td><td>100.0%</td>
-            <td style="color:var(--slate);font-weight:700">0.0%</td>
-            <td><span class="tag tag-g">SOV 3</span> <span class="tag tag-l">NS 2</span></td>
-          </tr>
-        </tbody>
+        <tbody id="country-tbody"></tbody>
       </table>
+      <div style="font-size:9.5px;color:var(--slate);margin-top:7px">Projects, NDB Commitments (excl. cancelled), Climate %, Local Currency % and Lending Mix computed live from NDB_Master_Data_163. Total Project Cost and Avg NDB Share shown as reference (not in source file).</div>
     </div>
   </div>
   <div class="row">
     <div class="cc"><div class="ct">Capital Subscription by Member (%)</div><canvas id="c-member-pie"></canvas></div>
     <div class="cc w"><div class="ct">Lending Deployment vs Capital Share - Deployment Ratio (1.0× = Proportional to Capital)</div><canvas id="c-deploy"></canvas></div>
   </div>
-  <div class="note green">
-    <strong>Portfolio Note:</strong> China leads active lending at USD 12.0 billion across 41 projects (excl. 2 cancelled), while India's Non-Sovereign pipeline is growing strongly through transactions with Piramal, Adani, ReNew, Serentica, and Shriram. Bangladesh (joined 2021) has rapidly built a 5-project pipeline, all climate-aligned. Russia and South Africa each hold 18.76% of subscribed capital and represent a meaningful opportunity to grow lending in line with their capital commitment as conditions allow.
+  <div class="note green" id="country-note">
+    <strong>Portfolio Note:</strong> China leads active lending at USD 12.0 billion across 41 projects (excl. 2 cancelled), while India's Non-Sovereign pipeline is growing strongly through transactions with Piramal, Adani, ReNew, Serentica, and Shriram. Bangladesh (joined 2021) has rapidly built a 6-project pipeline, all climate-aligned. Russia and South Africa each hold 18.76% of subscribed capital and represent a meaningful opportunity to grow lending in line with their capital commitment as conditions allow.
+  </div>
+
+  <!-- PROJECT LIST -->
+  <div class="row">
+    <div class="cc f">
+      <div class="pl-head">
+        <div class="ct" id="pl-title" style="margin-bottom:0;border-bottom:none;padding-bottom:0">List of Projects - All Member Countries</div>
+        <div class="pl-count" id="pl-count"></div>
+      </div>
+      <div style="overflow-x:auto"><table class="plt" id="project-list"></table></div>
+    </div>
   </div>
 </div>
 
@@ -426,13 +451,13 @@ canvas { max-height: 265px; }
   <div class="kpi-row">
     <div class="kpi k-lime">
       <div class="kpi-lbl">Climate Finance Share</div>
-      <div class="kpi-val" id="kv-s-climate" style="color:var(--lime)">46.3%</div>
-      <div class="kpi-sub" id="ks-s-climate">40% target - exceeded by 6 percentage points</div>
+      <div class="kpi-val" id="kv-s-climate" style="color:var(--lime)">47.2%</div>
+      <div class="kpi-sub" id="ks-s-climate">40% target - exceeded</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Climate-Flagged Projects</div>
-      <div class="kpi-val" id="kv-s-climate-proj">74</div>
-      <div class="kpi-sub" id="ks-s-climate-proj">of 160 total projects</div>
+      <div class="kpi-val" id="kv-s-climate-proj">77</div>
+      <div class="kpi-sub" id="ks-s-climate-proj">of 163 total projects</div>
     </div>
     <div class="kpi k-amber">
       <div class="kpi-lbl">Digital Infrastructure Projects</div>
@@ -442,7 +467,7 @@ canvas { max-height: 265px; }
     <div class="kpi k-dark">
       <div class="kpi-lbl">Transport - Largest Sector</div>
       <div class="kpi-val" id="kv-s-transport">57</div>
-      <div class="kpi-sub" id="ks-s-transport">35.6% of the entire portfolio</div>
+      <div class="kpi-sub" id="ks-s-transport">35.0% of the entire portfolio</div>
     </div>
   </div>
   <div class="row">
@@ -456,7 +481,7 @@ canvas { max-height: 265px; }
     </div>
   </div>
   <div class="note green">
-    <strong>Portfolio Note:</strong> Climate Finance reached 46.3% across the portfolio - well above the 40% strategic target - with 74 of 160 projects classified as climate-aligned, including all 5 Bangladesh projects. Transport continues to anchor the portfolio at 35.6% of projects and USD 18.7 billion in commitments. Digital Infrastructure, currently at 1 project (0.6%), represents an area with considerable headroom for growth, particularly given the sector's increasing importance in peer institutions' portfolios.
+    <strong>Portfolio Note:</strong> Climate Finance reaches 47.2% across the portfolio - well above the 40% strategic target - with 77 of 163 projects classified as climate-aligned, including all 6 Bangladesh projects. Transport continues to anchor the portfolio at 35.0% of projects. Digital Infrastructure, currently at 1 project (0.6%), represents an area with considerable headroom for growth, particularly given the sector's increasing importance in peer institutions' portfolios.
   </div>
 </div>
 
@@ -467,13 +492,13 @@ canvas { max-height: 265px; }
   <div class="kpi-row">
     <div class="kpi k-lime">
       <div class="kpi-lbl">Non-Sovereign (NS) Share in 2025</div>
-      <div class="kpi-val" style="color:var(--lime)">52.2%</div>
+      <div class="kpi-val" id="kv-ns-2025" style="color:var(--lime)">66.7%</div>
       <div class="kpi-sub">First time above 50% - a milestone achievement</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Total Non-Sovereign (NS) Projects</div>
-      <div class="kpi-val" id="kv-sov-ns-total">41</div>
-      <div class="kpi-sub" id="ks-sov-ns-total">of 160 projects (25.6%)</div>
+      <div class="kpi-val" id="kv-sov-ns-total">43</div>
+      <div class="kpi-sub" id="ks-sov-ns-total">of 163 projects (26.4%)</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl" id="kl-sov-ns-country">India Non-Sovereign Projects</div>
@@ -482,7 +507,7 @@ canvas { max-height: 265px; }
     </div>
     <div class="kpi k-slate">
       <div class="kpi-lbl">Technical Assistance (TA)</div>
-      <div class="kpi-val">2</div>
+      <div class="kpi-val" id="kv-ta">2</div>
       <div class="kpi-sub">Technical Assistance transactions</div>
     </div>
   </div>
@@ -506,7 +531,7 @@ canvas { max-height: 265px; }
   <div class="kpi-row">
     <div class="kpi k-amber">
       <div class="kpi-lbl">Local Currency (LC) Share</div>
-      <div class="kpi-val" id="kv-lc" style="color:var(--amber)">23.1%</div>
+      <div class="kpi-val" id="kv-lc" style="color:var(--amber)">23.5%</div>
       <div class="kpi-sub" id="ks-lc">Progressing toward 30% strategic target</div>
     </div>
     <div class="kpi k-lime">
@@ -521,7 +546,7 @@ canvas { max-height: 265px; }
     </div>
     <div class="kpi k-amber">
       <div class="kpi-lbl" id="kl-lc-excl">Local Currency Share - Excluding China</div>
-      <div class="kpi-val" id="kv-lc-excl" style="color:var(--amber)">4.4%</div>
+      <div class="kpi-val" id="kv-lc-excl" style="color:var(--amber)">5.1%</div>
       <div class="kpi-sub" id="ks-lc-excl">Significant headroom for other members</div>
     </div>
   </div>
@@ -534,8 +559,7 @@ canvas { max-height: 265px; }
     <div class="cc"><div class="ct">NDB Commitments by Currency (USD Million)</div><canvas id="c-curr-usd"></canvas></div>
   </div>
   <div class="note amber">
-    <strong>Portfolio Insight:</strong> The portfolio has 30 Renminbi (RMB) loans - 27 for China-based projects and 3 for Brazil-based projects - accounting for the bulk of the 23.1% local currency share. Excluding China, the figure stands at 8.4% (10 of 119 non-China projects) - illustrating the significant local currency opportunity in other member countries. India has 42 projects with 1 denominated in Indian Rupees (INR); South Africa has 6 South African Rand (ZAR) loans alongside 13 in USD; Brazil has 35 projects with none in Brazilian Real (BRL), though 3 Brazil projects are denominated in RMB.<br><br>
-   
+    <strong>Portfolio Insight:</strong> The portfolio has 30 Renminbi (RMB) loans - the bulk of the local currency share - alongside 7 South African Rand (ZAR) loans and 1 Indian Rupee (INR) loan. Excluding China, the local currency share drops sharply, illustrating the significant local currency opportunity in other member countries. Brazil has no Brazilian Real (BRL) loans, and India has just 1 Indian Rupee transaction across 42 projects - both clear areas to deepen local-currency lending.
   </div>
 </div>
 
@@ -546,13 +570,13 @@ canvas { max-height: 265px; }
   <div class="kpi-row">
     <div class="kpi k-lime">
       <div class="kpi-lbl">Median Approval Velocity</div>
-      <div class="kpi-val" id="kv-vel-median" style="color:var(--g2)">9 months</div>
+      <div class="kpi-val" id="kv-vel-median" style="color:var(--g2)">7.2 months</div>
       <div class="kpi-sub" id="ks-vel-median">vs World Bank average of 18–24 months</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Projects with Velocity Data</div>
-      <div class="kpi-val" id="kv-vel-count">95</div>
-      <div class="kpi-sub" id="ks-vel-count">of 160 projects have recorded velocity</div>
+      <div class="kpi-val" id="kv-vel-count">96</div>
+      <div class="kpi-sub" id="ks-vel-count">of 163 projects have recorded velocity</div>
     </div>
     <div class="kpi">
       <div class="kpi-lbl">Non-Sovereign Average</div>
@@ -573,138 +597,63 @@ canvas { max-height: 265px; }
     <div class="cc"><div class="ct">Distribution of Approval Times</div><canvas id="c-vel-bins"></canvas></div>
   </div>
   <div class="note green">
-    <strong>Portfolio Note:</strong> NDB's median approval time of 9 months compares very favourably to the World Bank's 18–24 months, reflecting a structural institutional advantage. The 2020 average of 5.4 months reflects the COVID-19 Emergency Response facilities, which moved from concept to approval within 1–2 months. Excluding emergency facilities, infrastructure project velocity is approximately 12–14 months. Non-Sovereign projects are processed around 36% faster than Sovereign transactions.
+    <strong>Portfolio Note:</strong> NDB's median approval time of 7.2 months compares very favourably to the World Bank's 18–24 months, reflecting a structural institutional advantage. Emergency COVID-19 facilities moved from concept to approval within 1–2 months, pulling the 2020 average down. Non-Sovereign projects (6.8 months average) are processed materially faster than Sovereign transactions (10.7 months).
   </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
-     PAGE 7 - RUSSIA PORTFOLIO
-══════════════════════════════════════════════════════════ -->
-<div id="page-russia" class="page">
-  <div class="kpi-row">
-    <div class="kpi k-dark">
-      <div class="kpi-lbl">Total Russia Projects</div>
-      <div class="kpi-val">18</div>
-      <div class="kpi-sub">All approved between 2016 and 2021</div>
-    </div>
-    <div class="kpi k-slate">
-      <div class="kpi-lbl">New Approvals Since Q2 2022</div>
-      <div class="kpi-val" style="color:var(--slate)">On hold</div>
-      <div class="kpi-sub">Pending resolution of geopolitical circumstances</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-lbl">Russia Portfolio Commitments (USD M)</div>
-      <div class="kpi-val">$3,784</div>
-      <div class="kpi-sub">Excl. 4 cancelled projects (~9% of active portfolio)</div>
-    </div>
-    <div class="kpi k-amber">
-      <div class="kpi-lbl">Russia Capital Subscription</div>
-      <div class="kpi-val" style="color:var(--amber)">18.76%</div>
-      <div class="kpi-sub">Founding member capital share</div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="cc f"><div class="ct">Russia vs Other Members - Annual Project Approvals</div><canvas id="c-russia-stack" style="max-height:225px"></canvas></div>
-  </div>
-  <div class="row">
-    <div class="cc"><div class="ct">Russia Portfolio - Sector Distribution</div><canvas id="c-russia-sector"></canvas></div>
-    <div class="cc"><div class="ct">Russia Portfolio - Lending Type Distribution</div><canvas id="c-russia-type"></canvas></div>
-    <div class="cc"><div class="ct">Active Portfolio - Member Country Concentration</div><canvas id="c-concentration"></canvas></div>
-  </div>
-  <div class="note rose">
-    <strong>Portfolio Note:</strong> Russia's project pipeline has been on hold since Q2 2022 in response to geopolitical developments. The resulting shift in annual approvals has been absorbed by increased activity in China, India, and Bangladesh. With Russia holding 18.76% of NDB's subscribed capital, there is a natural rebalancing opportunity as the portfolio continues to grow - expanding activity in Brazil, South Africa, and newer members will further diversify concentration across the membership.
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════
-     PAGE 8 - STRATEGIC INSIGHTS
+     PAGE 8 - STRATEGIC INSIGHTS (observations only)
 ══════════════════════════════════════════════════════════ -->
 <div id="page-insights" class="page">
-  <div class="kpi-row">
-    <div class="kpi k-lime">
-      <div class="kpi-lbl">Climate Finance vs Target</div>
-      <div class="kpi-val" style="color:var(--lime)">46.3%</div>
-      <div class="kpi-sub">40% target - exceeded</div>
-    </div>
-    <div class="kpi k-lime">
-      <div class="kpi-lbl">Non-Sovereign Milestone Reached</div>
-      <div class="kpi-val" style="color:var(--g2)">2025</div>
-      <div class="kpi-sub">Non-Sovereign share above 50% for the first time</div>
-    </div>
-    <div class="kpi k-amber">
-      <div class="kpi-lbl">Digital Infrastructure Share</div>
-      <div class="kpi-val" style="color:var(--amber)">0.6%</div>
-      <div class="kpi-sub">High-potential area relative to peer institutions</div>
-    </div>
-    <div class="kpi k-amber">
-      <div class="kpi-lbl">Local Currency vs Target</div>
-      <div class="kpi-val" style="color:var(--amber)">23.1%</div>
-      <div class="kpi-sub">Progressing toward 30% strategic target</div>
-    </div>
-  </div>
+  <div class="ins-intro">Neutral, data-driven observations of the full NDB portfolio (all 163 projects, every status). This tab is not affected by the Country or Status filters.</div>
 
-  <div class="bgrid">
-    <div class="bk">
-      <div class="bk-h green">Portfolio Strengths</div>
-      <div class="bk-b">
-        <div class="bi"><span class="bn">1.</span> <strong>Non-Sovereign Scaling in India</strong> - 9 Non-Sovereign transactions through Piramal, Adani, ReNew, Serentica, and Shriram have established a replicable model. The Non-Sovereign (NS) share crossed 50% in 2025 for the first time.</div>
-        <div class="bi"><span class="bn">2.</span> <strong>Bangladesh Onboarding</strong> - Bangladesh (joined 2021) has built a growing project pipeline, adding meaningful diversification to the founding-member concentration.</div>
-        <div class="bi"><span class="bn">3.</span> <strong>Climate Finance at 46.3%</strong> - Exceeds the 40% strategic target with 74 of 160 projects classified as climate-aligned. The 2025 cohort shows a strong acceleration in green lending, and Bangladesh's entire 5-project pipeline is climate-aligned.</div>
-        <div class="bi"><span class="bn">4.</span> <strong>Approval Speed</strong> - A median approval time of 9 months versus the World Bank's 18–24 months represents a structural institutional advantage in infrastructure financing.</div>
-      </div>
-    </div>
-    <div class="bk">
-      <div class="bk-h amber">Opportunities for Growth</div>
-      <div class="bk-b">
-        <div class="bi"><span class="bn">1.</span> <strong>Digital Infrastructure</strong> - Currently at 1 of 160 projects (0.6%), this sector represents a high-growth opportunity. Peer institutions such as the Asian Infrastructure Investment Bank (AIIB) and the World Bank allocate 5–10% of their portfolios to digital.</div>
-        <div class="bi"><span class="bn">2.</span> <strong>Local Currency Lending</strong> - At 23.1% against a 30% target, there is meaningful headroom, particularly in India (1 Indian Rupee loan from 42 projects), Brazil (no Brazilian Real loans from 35 projects), and South Africa.</div>
-        <div class="bi"><span class="bn">3.</span> <strong>Cancellation Rate</strong> - 18 projects (11.25%) have been cancelled. Strengthening early-stage pipeline screening would help improve this ratio over the next strategic cycle.</div>
-        <div class="bi"><span class="bn">4.</span> <strong>Portfolio Diversification</strong> - With China, India, and Brazil representing over 80% of active commitments, growing activity in Russia, South Africa, and newer members will further balance the portfolio across the full membership.</div>
-      </div>
-    </div>
-    <div class="bk">
-      <div class="bk-h teal">Strategic Partnership Opportunities</div>
-      <div class="bk-b">
-        <div class="bi"><span class="bn">1.</span> <strong>Brazil - Brazilian Real (BRL) Lending via BNDES</strong> - Co-financing with Banco Nacional de Desenvolvimento Econômico e Social (BNDES) and Banco de Desenvolvimento de Minas Gerais (BDMG) would unlock BRL-denominated instruments and grow the Non-Sovereign pipeline.</div>
-        <div class="bi"><span class="bn">2.</span> <strong>South Africa - Rand (ZAR) Lending via DBSA</strong> - A deeper partnership with the Development Bank of Southern Africa (DBSA) can accelerate South African Rand (ZAR) lending and open Non-Sovereign private-sector transactions.</div>
-        <div class="bi"><span class="bn">3.</span> <strong>India - Rupee (INR) Lending via NIIF and REC</strong> - Co-financing with the National Investment and Infrastructure Fund (NIIF) and Rural Electrification Corporation (REC) can enable Indian Rupee (INR) Non-Sovereign transactions at scale.</div>
-        <div class="bi"><span class="bn">4.</span> <strong>Bangladesh and Egypt - Cross-Member Corridors</strong> - Positioning newer members as co-financiers in multi-country projects would leverage Egypt's Middle East and North Africa (MENA) corridor alongside Bangladesh's South Asia infrastructure pipeline.</div>
-      </div>
+  <div class="ins-grid" id="insights-cards"></div>
+
+  <div class="cc f" style="margin-bottom:18px">
+    <div class="ct">Portfolio Observations</div>
+    <div>
+      <div class="obs-i"><b>Geographic concentration.</b> The portfolio is anchored by China, India and Brazil, which together account for over four-fifths of NDB commitments; Russia, South Africa and Bangladesh make up the remainder.</div>
+      <div class="obs-i"><b>Sector profile.</b> Transport is the single largest sector at roughly a third of all projects, led by China and India. Digital infrastructure is represented by a single project across the entire portfolio.</div>
+      <div class="obs-i"><b>2020 commitment spike.</b> The peak in 2020 commitments corresponds to COVID-19 emergency assistance facilities, which moved from concept to approval in one to two months and pulled that year's average approval time well below trend.</div>
+      <div class="obs-i"><b>Lending model.</b> Sovereign transactions make up close to three-quarters of the portfolio. Non-Sovereign lending is concentrated in India, and crossed half of all approvals for the first time in 2025.</div>
+      <div class="obs-i"><b>Currency composition.</b> Local-currency lending is almost entirely Renminbi. Outside China, the portfolio is overwhelmingly hard-currency, with only a handful of Rand and a single Rupee transaction.</div>
+      <div class="obs-i"><b>Membership expansion.</b> Among members admitted since the founding five, only Bangladesh (joined 2021) has an active pipeline so far, and it is entirely climate-aligned. The UAE (2021), Egypt (2023) and Algeria (2025) have been admitted but are yet to be allotted any projects in the portfolio; Colombia and Uzbekistan (2025) and prospective member Uruguay are the most recent additions.</div>
+      <div class="obs-i"><b>Approval velocity.</b> Median concept-to-approval time sits well below the 18–24 month range typical of larger multilateral lenders, with Non-Sovereign deals clearing materially faster than Sovereign ones.</div>
     </div>
   </div>
 
   <div class="cc f">
-    <div class="ct">Portfolio Scorecard - Actual Performance vs Strategic Targets</div>
+    <div class="ct">Portfolio Metrics vs Strategic Targets</div>
     <div class="sc">
       <div class="sc-r">
         <div class="sc-lbl">Climate Finance Share &nbsp;<small style="color:#8aab8a">(Target: 40%)</small></div>
         <div class="sc-bw"><div class="sc-bg" style="width:100%;background:var(--lime)"></div></div>
-        <div class="sc-v" style="color:var(--lime)">46.3%</div>
-        <div class="sc-tg" style="color:var(--g2)">Target met</div>
+        <div class="sc-v" style="color:var(--lime)">47.2%</div>
+        <div class="sc-tg" style="color:var(--g2)">Above target</div>
       </div>
       <div class="sc-r">
         <div class="sc-lbl">Local Currency Share &nbsp;<small style="color:#8aab8a">(Target: 30%)</small></div>
-        <div class="sc-bw"><div class="sc-bg" style="width:77%;background:var(--amber)"></div></div>
-        <div class="sc-v" style="color:var(--amber)">23.1%</div>
-        <div class="sc-tg" style="color:var(--slate)">In progress</div>
+        <div class="sc-bw"><div class="sc-bg" style="width:78%;background:var(--amber)"></div></div>
+        <div class="sc-v" style="color:var(--amber)">23.5%</div>
+        <div class="sc-tg" style="color:var(--slate)">Below target</div>
       </div>
       <div class="sc-r">
-        <div class="sc-lbl">Non-Sovereign Share &nbsp;<small style="color:#8aab8a">(2025 milestone: 50%)</small></div>
+        <div class="sc-lbl">Non-Sovereign Share, 2025 &nbsp;<small style="color:#8aab8a">(Milestone: 50%)</small></div>
         <div class="sc-bw"><div class="sc-bg" style="width:100%;background:var(--g3)"></div></div>
-        <div class="sc-v" style="color:var(--g2)">52.2%</div>
-        <div class="sc-tg" style="color:var(--g2)">Milestone reached</div>
+        <div class="sc-v" style="color:var(--g2)">66.7%</div>
+        <div class="sc-tg" style="color:var(--g2)">Above milestone</div>
       </div>
       <div class="sc-r">
-        <div class="sc-lbl">Approval Speed vs World Bank &nbsp;<small style="color:#8aab8a">(WB: 18–24 months)</small></div>
+        <div class="sc-lbl">Median Approval Time &nbsp;<small style="color:#8aab8a">(WB: 18–24 months)</small></div>
         <div class="sc-bw"><div class="sc-bg" style="width:100%;background:var(--g4)"></div></div>
-        <div class="sc-v" style="color:var(--g2)">9 months</div>
-        <div class="sc-tg" style="color:var(--g2)">2× faster</div>
+        <div class="sc-v" style="color:var(--g2)">7.2 mo</div>
+        <div class="sc-tg" style="color:var(--g2)">Faster</div>
       </div>
       <div class="sc-r">
         <div class="sc-lbl">Digital Infrastructure Share &nbsp;<small style="color:#8aab8a">(Peer average: 5–10%)</small></div>
         <div class="sc-bw"><div class="sc-bg" style="width:8%;background:#A16207"></div></div>
         <div class="sc-v" style="color:var(--amber)">0.6%</div>
-        <div class="sc-tg" style="color:var(--slate)">Developing</div>
+        <div class="sc-tg" style="color:var(--slate)">Below peers</div>
       </div>
     </div>
   </div>
@@ -714,46 +663,32 @@ canvas { max-height: 265px; }
      FOOTER
 ══════════════════════════════════════════════════════════ -->
 <div class="footer">
-  <span>New Development Bank - Portfolio Analytics · Data: NDB_Master_Data.xlsx · 160 Projects · 6 Member Countries · 2016–2026</span>
+  <span>New Development Bank - Portfolio Analytics · Data: NDB_Master_Data_163.xlsx · 163 Projects · 2016–2026</span>
   <span><strong>Created by Nikhil Prakash Pandit</strong></span>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════════════════════════ -->
 <script>
-// ── PROFESSIONAL PALETTE ──────────────────────────────────
-// Industry-standard: sequential greens for NDB theme,
-// categorical diverging for multi-series, muted functionals.
+const PROJECTS = [{"n": "adani-total-city-gas-distribution", "c": "India", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Proposed", "cur": "USD", "amt": 100, "usd": 100, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "affordable-housing-and-urban-development-program", "c": "Russia", "s": "Social Infrastructure", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 300, "usd": 300, "cl": "Conventional", "esg": "C", "v": 6.2, "ad": "23 September 2021", "y": 2021}, {"n": "anhui-province-roads-development-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "EUR", "amt": 340, "usd": 374, "cl": "Conventional", "esg": "C", "v": 23.1, "ad": "29 June 2021", "y": 2021}, {"n": "anhui-tongling-g3-road-rail-bridge-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "RMB", "amt": 2190, "usd": 306.6, "cl": "Conventional", "esg": "A", "v": 11.9, "ad": "13 December 2022", "y": 2022}, {"n": "aparecida-de-goiania-100-years-infrastructure-program", "c": "Brazil", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 120, "usd": 120, "cl": "Conventional", "esg": "B", "v": 18.5, "ad": "10 July 2023", "y": 2023}, {"n": "assam-bridge-ii-project", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 333.8, "usd": 333.8, "cl": "Conventional", "esg": "A", "v": 19.7, "ad": "March 30, 2024", "y": 2024}, {"n": "assam-bridge-project", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 300, "usd": 300, "cl": "Conventional", "esg": "A", "v": 9.6, "ad": "8 July 2019", "y": 2019}, {"n": "banco-do-brasil-sustainable-finance-project", "c": "Brazil", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 200, "usd": 200, "cl": "Climate-Aligned", "esg": "FI-FI-A", "v": 6.6, "ad": "18 May 2022", "y": 2022}, {"n": "bangladesh-natural-gas-network-improvement-project", "c": "Bangladesh", "s": "Clean Energy", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 260, "usd": 260, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "bank-of-huzhou-sustainable-infrastructure-project", "c": "China", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Approved", "cur": "RMB", "amt": 357.55, "usd": 50.1, "cl": "Climate-Aligned", "esg": "C", "v": 5, "ad": "28 November 2023", "y": 2023}, {"n": "bdmg-infrastructure-and-sustainable-development-financing-project", "c": "Brazil", "s": "Multiple Areas", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 200, "usd": 200, "cl": "Climate-Aligned", "esg": "C", "v": 9.1, "ad": "19 December 2023", "y": 2023}, {"n": "beijing-gas-tianjin-nangang-lng-emergency-reserve-project", "c": "China", "s": "Clean Energy", "t": "Sovereign", "st": "Approved", "cur": "EUR", "amt": 436, "usd": 479.6, "cl": "Climate-Aligned", "esg": "A", "v": 6.6, "ad": "09 March 2021", "y": 2021}, {"n": "bihar-rural-road-phase-ii", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 638.12, "usd": 638.1, "cl": "Conventional", "esg": "C", "v": 8, "ad": "28 November 2023", "y": 2023}, {"n": "bihar-rural-roads-project", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 350, "usd": 350, "cl": "Conventional", "esg": "B", "v": null, "ad": "28 May 2018", "y": 2018}, {"n": "bndes-clima-sustainable-financing-to-support-global-climate-change-mitigation-and-adaptation-in-brazil", "c": "Brazil", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 500, "usd": 500, "cl": "Climate-Aligned", "esg": "C", "v": 0.9, "ad": "29 June 2021", "y": 2021}, {"n": "bndesbrazil", "c": "Brazil", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Completed", "cur": "USD", "amt": 300, "usd": 300, "cl": "Climate-Aligned", "esg": "A", "v": null, "ad": "13 April 2016", "y": 2016}, {"n": "bocom-financial-leasing-lng-transportation-project", "c": "China", "s": "Transport", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 150, "usd": 150, "cl": "Conventional", "esg": "C", "v": 10.4, "ad": "29 August 2024", "y": 2024}, {"n": "brasilia-capital-of-solar-lighting-project", "c": "Brazil", "s": "Clean Energy", "t": "Sovereign", "st": "Cancelled", "cur": "EUR", "amt": 77, "usd": 84.7, "cl": "Climate-Aligned", "esg": "B", "v": 36.1, "ad": "27 December 2024", "y": 2024}, {"n": "brazil-bndes-ndb-sustainable-infrastructure-project", "c": "Brazil", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 1200, "usd": 1200, "cl": "Climate-Aligned", "esg": "C", "v": 3.9, "ad": "15 December 2020", "y": 2020}, {"n": "brazil-brazil-emergency-assistance-program-economic-recovery", "c": "Brazil", "s": "COVID-19", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Conventional", "esg": "C", "v": null, "ad": null, "y": null}, {"n": "brazil-brde-sustainable-infrastructure-program", "c": "Brazil", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "EUR", "amt": 134.64, "usd": 148.1, "cl": "Climate-Aligned", "esg": "C", "v": 9, "ad": "15 December 2020", "y": 2020}, {"n": "brazil-curitibas-bus-rapid-transit-rideability-improvement-project", "c": "Brazil", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 75, "usd": 75, "cl": "Conventional", "esg": "B", "v": 5.4, "ad": "15 December 2020", "y": 2020}, {"n": "brazil-emergency-assistance-program-combating-covid-19", "c": "Brazil", "s": "COVID-19", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Conventional", "esg": "C", "v": null, "ad": "20 July 2020", "y": 2020}, {"n": "brazil-north-region-transportation-infrastructure-improvement-project", "c": "Brazil", "s": "Transport", "t": "Non-Sovereign", "st": "Completed", "cur": "USD", "amt": 300, "usd": 300, "cl": "Conventional", "esg": "A", "v": 2.3, "ad": "12 November 2019", "y": 2019}, {"n": "brazil-para-ii-transport-infrastructure-regional-development", "c": "Brazil", "s": "Transport", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 153, "usd": 153, "cl": "Conventional", "esg": "C", "v": 13.7, "ad": "29 March 2021", "y": 2021}, {"n": "brazil-patria-infrastructure-fund-iv", "c": "Brazil", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 100, "usd": 100, "cl": "Conventional", "esg": "FI", "v": null, "ad": null, "y": null}, {"n": "brazil-smart-hospital-project", "c": "Brazil", "s": "Social Infrastructure", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 320, "usd": 320, "cl": "Conventional", "esg": "C", "v": null, "ad": null, "y": null}, {"n": "brazil-teresina-educational-infrastructure-program", "c": "Brazil", "s": "Social Infrastructure", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 50, "usd": 50, "cl": "Conventional", "esg": "B", "v": 6.8, "ad": "29 June 2020", "y": 2020}, {"n": "Canara Renewable Energy Financing Scheme Project", "c": "India", "s": "Clean Energy", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 250, "usd": 250, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": "13 April 2016", "y": 2016}, {"n": "chennai-metro-rail-project-corridor-4", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 346.72, "usd": 346.7, "cl": "Conventional", "esg": "A", "v": 14.8, "ad": "13 December 2022", "y": 2022}, {"n": "china-emergency-assistance-program-supporting-chinas-economic-recovery-covid-19", "c": "China", "s": "COVID-19", "t": "Sovereign", "st": "Completed", "cur": "RMB", "amt": 7000, "usd": 980, "cl": "Conventional", "esg": "FI", "v": null, "ad": "26 February 2021", "y": 2021}, {"n": "china-huangshi-modern-tram-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Completed", "cur": "RMB", "amt": 2760, "usd": 386.4, "cl": "Conventional", "esg": "B", "v": 4.6, "ad": "2 December 2019", "y": 2019}, {"n": "china-ndb-emergency-assistance-program-combating-covid-19", "c": "China", "s": "COVID-19", "t": "Sovereign", "st": "Completed", "cur": "RMB", "amt": 7000, "usd": 980, "cl": "Conventional", "esg": "B", "v": null, "ad": "19 March 2020", "y": 2020}, {"n": "chongqing-small-cities-sustainable-development-project", "c": "China", "s": "Multiple Areas", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 300, "usd": 300, "cl": "Climate-Aligned", "esg": "A", "v": null, "ad": "28 May 2018", "y": 2018}, {"n": "covid-19-emergency-program-loan-for-supporting-russias-healthcare-response", "c": "Russia", "s": "COVID-19", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Conventional", "esg": "C", "v": null, "ad": "25 March 2021", "y": 2021}, {"n": "covid-19-emergency-program-loan-for-supporting-south-africas-economic-recovery-from-covid-19", "c": "South Africa", "s": "COVID-19", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Conventional", "esg": "B", "v": null, "ad": "02 April 2021", "y": 2021}, {"n": "dbsa-sustainable-infrastructure-project", "c": "South Africa", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 100, "usd": 100, "cl": "Climate-Aligned", "esg": "C", "v": 2.4, "ad": "13 December 2022", "y": 2022}, {"n": "desenvolve-sp-sustainable-infrastructure-project", "c": "Brazil", "s": "Multiple Areas", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 90, "usd": 90, "cl": "Climate-Aligned", "esg": "C", "v": 23.2, "ad": "22 March 2022", "y": 2022}, {"n": "development-of-water-supply-and-sanitation-systems-project", "c": "Russia", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 320, "usd": 320, "cl": "Climate-Aligned", "esg": "B", "v": null, "ad": null, "y": null}, {"n": "dhaka-and-narayanganj-gas-network-infrastructure-improvement-project", "c": "Bangladesh", "s": "Clean Energy", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 442, "usd": 442, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "dhaka-water-supply-project", "c": "Bangladesh", "s": "Water & Sanitation", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 320, "usd": 320, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "durban-container-terminal-berth-reconstruction-project", "c": "South Africa", "s": "Transport", "t": "Non-Sovereign", "st": "Approved", "cur": "ZAR", "amt": 3500, "usd": 192.5, "cl": "Conventional", "esg": "C", "v": 4.1, "ad": "28 May 2018", "y": 2018}, {"n": "Beliy Porog Hydro Powerplant Project", "c": "Russia", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Completed", "cur": "USD", "amt": 100, "usd": 100, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": "20 July 2016", "y": 2016}, {"n": "electricity-distribution-infrastructure-modernization-project", "c": "Brazil", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 200, "usd": 200, "cl": "Climate-Aligned", "esg": "C", "v": 8.5, "ad": "23 October 2024", "y": 2024}, {"n": "environmental-protection-project-brazil", "c": "Brazil", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Completed", "cur": "USD", "amt": 200, "usd": 200, "cl": "Conventional", "esg": "B", "v": null, "ad": "28 May 2018", "y": 2018}, {"n": "environmental-protection-project-medupi-thermal-power-plant", "c": "South Africa", "s": "Multiple Areas", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 480, "usd": 480, "cl": "Conventional", "esg": "A", "v": 1.1, "ad": "31 March 2019", "y": 2019}, {"n": "fonplata-sustainable-infrastructure-project", "c": "Brazil", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Cancelled", "cur": "USD", "amt": 50, "usd": 50, "cl": "Climate-Aligned", "esg": "C", "v": 15.2, "ad": "22 March 2022", "y": 2022}, {"n": "gansu-regional-medical-centre", "c": "China", "s": "Social Infrastructure", "t": "Sovereign", "st": "Proposed", "cur": "RMB", "amt": 1500, "usd": 210, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "ganzhou-urban-transport-improvement-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Proposed", "cur": "RMB", "amt": 3440, "usd": 481.6, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "gemstar-advanced-metering-infrastructure-project", "c": "India", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Proposed", "cur": "USD", "amt": 100, "usd": 100, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "graca-aranha-silvania-energy-transmission-project", "c": "Brazil", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Approved", "cur": "RMB", "amt": 2150, "usd": 301, "cl": "Climate-Aligned", "esg": null, "v": 7.2, "ad": "27 November 2025", "y": 2025}, {"n": "greener-shanghai-project", "c": "China", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 100, "usd": 100, "cl": "Climate-Aligned", "esg": "C", "v": 5.5, "ad": "17 September 2025", "y": 2025}, {"n": "greenhouse-gas-emissions-reduction-energy-sector-development-project-south-africa", "c": "South Africa", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Completed", "cur": "USD", "amt": 300, "usd": 300, "cl": "Climate-Aligned", "esg": "C", "v": 2.4, "ad": "20 July 2018", "y": 2018}, {"n": "guangdong-yudean-yangjiang-shapa-offshore-wind-power-project-china", "c": "China", "s": "Clean Energy", "t": "Sovereign", "st": "Completed", "cur": "RMB", "amt": 2000, "usd": 280, "cl": "Climate-Aligned", "esg": "A", "v": null, "ad": "16 November 2018", "y": 2018}, {"n": "guangxi-chongzuo-urban-water-system-ecological-restoration-project", "c": "China", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 187, "usd": 187, "cl": "Climate-Aligned", "esg": "A", "v": 6, "ad": "31 March 2019", "y": 2019}, {"n": "guangxi-regional-road-network-improvement-program", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "EUR", "amt": 465, "usd": 511.5, "cl": "Conventional", "esg": "A", "v": 13.1, "ad": "13 December 2022", "y": 2022}, {"n": "guiyang-urban-integration-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Proposed", "cur": "RMB", "amt": 2438, "usd": 341.3, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "guizhou-qianxinan-rural-roads-improvement-program", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "RMB", "amt": 1280, "usd": 179.2, "cl": "Conventional", "esg": "B", "v": 12.2, "ad": "01 March 2023", "y": 2023}, {"n": "gujarat-rural-road-program", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 500, "usd": 500, "cl": "Conventional", "esg": "A", "v": 14.2, "ad": "28 November 2023", "y": 2023}, {"n": "haitong-leasing-environmental-protection-project", "c": "China", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 100, "usd": 100, "cl": "Conventional", "esg": "C", "v": 5.6, "ad": "28 November 2024", "y": 2024}, {"n": "himachal-pradesh-rural-water-supply-project", "c": "India", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 80, "usd": 80, "cl": "Climate-Aligned", "esg": "B", "v": null, "ad": "08 December 2021", "y": 2021}, {"n": "hohhot-new-airport-project-china", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "RMB", "amt": 4200, "usd": 588, "cl": "Conventional", "esg": "A", "v": 18.1, "ad": "16 November 2018", "y": 2018}, {"n": "hubei-huangshi-new-port-modern-logistics-hub-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "RMB", "amt": 1990, "usd": 278.6, "cl": "Conventional", "esg": "C", "v": null, "ad": null, "y": null}, {"n": "hunan-china", "c": "China", "s": "Water & Sanitation", "t": "Sovereign", "st": "Cancelled", "cur": "RMB", "amt": 2000, "usd": 280, "cl": "Climate-Aligned", "esg": "B", "v": null, "ad": "30 August, 2017", "y": 2017}, {"n": "hyderabad-elevated-corridor-project", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 427.35, "usd": 427.4, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "india-andhra-pradesh-road-sector-project", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 140.9, "usd": 140.9, "cl": "Conventional", "esg": "B", "v": 4.6, "ad": "12 September 2019", "y": 2019}, {"n": "india-covid-19-emergency-program-loan-supporting-indias-economic-recovery-covid-19", "c": "India", "s": "COVID-19", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Conventional", "esg": "C", "v": null, "ad": "11 December 2020", "y": 2020}, {"n": "india-delhi-ghaziabad-meerut-regional-rapid-transit-system-rrts-project", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 500, "usd": 500, "cl": "Conventional", "esg": "A", "v": 3.4, "ad": "29 September 2020", "y": 2020}, {"n": "india-indore-metro-rail-project", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 225, "usd": 225, "cl": "Conventional", "esg": "A", "v": 12.4, "ad": "2 December 2019", "y": 2019}, {"n": "india-manipur-water-supply-project", "c": "India", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 312, "usd": 312, "cl": "Climate-Aligned", "esg": "B", "v": 3, "ad": "2 December 2019", "y": 2019}, {"n": "india-mumbai-metro-rail-ii-project", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 241, "usd": 241, "cl": "Conventional", "esg": "C", "v": 7.8, "ad": "29 September 2020", "y": 2020}, {"n": "india-mumbai-urban-transport-project-phase-3a-ii", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 500, "usd": 500, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "india-national-investment-infrastructure-fund-fund-funds", "c": "India", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 100, "usd": 100, "cl": "Conventional", "esg": "FI", "v": 4.6, "ad": "25 March 2020", "y": 2020}, {"n": "india-ndb-emergency-assistance-program-combating-covid-19", "c": "India", "s": "COVID-19", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Conventional", "esg": "B", "v": null, "ad": "30 April 2020", "y": 2020}, {"n": "integrated-sewerage-system-for-city-of-imphal-phase-ii", "c": "India", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 115, "usd": 115, "cl": "Climate-Aligned", "esg": "B", "v": 22.4, "ad": "26 October 2023", "y": 2023}, {"n": "integration-social-and-sustainable-development-program-of-maceio", "c": "Brazil", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 150, "usd": 150, "cl": "Climate-Aligned", "esg": "B", "v": null, "ad": null, "y": null}, {"n": "jiangxi-china", "c": "China", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 200, "usd": 200, "cl": "Climate-Aligned", "esg": "B", "v": null, "ad": "30 August 2017", "y": 2017}, {"n": "jiangxi-natural-gas-transmission-system-development-project-china", "c": "China", "s": "Clean Energy", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 254, "usd": 254, "cl": "Climate-Aligned", "esg": "C", "v": null, "ad": "16 November 2018", "y": 2018}, {"n": "jiangxi-urban-and-rural-cold-chain-logistics-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Proposed", "cur": "RMB", "amt": 3623, "usd": 507.2, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "judicial-support-russia", "c": "Russia", "s": "Social Infrastructure", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 460, "usd": 460, "cl": "Conventional", "esg": "B", "v": 1.9, "ad": "30 August 2017", "y": 2017}, {"n": "kohima-town-water-supply-augmentation-project", "c": "India", "s": "Water & Sanitation", "t": "Technical Assistance", "st": "Completed", "cur": "USD", "amt": 252.3, "usd": 252.3, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "kohima-water-supply-augmentation-project", "c": "India", "s": "Water & Sanitation", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 39.73, "usd": 39.7, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "lamphelpat-waterbody-rejuvenation-project", "c": "India", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 70.27, "usd": 70.3, "cl": "Climate-Aligned", "esg": "B", "v": 8, "ad": "18 July 2022", "y": 2022}, {"n": "lanzhou-new-area-regional-hub-multimodal-logistics-transport-infrastructure-demonstration-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "RMB", "amt": 2511.9, "usd": 351.7, "cl": "Conventional", "esg": "B", "v": 13.8, "ad": "25 June 2019", "y": 2019}, {"n": "lanzhou-zhongchuan-international-airport-phase-iii-expansion-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "EUR", "amt": 265, "usd": 291.5, "cl": "Conventional", "esg": "A", "v": 10.7, "ad": "18 July 2022", "y": 2022}, {"n": "lesotho-highlands-water-project-phase-ii", "c": "South Africa", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "ZAR", "amt": 3200, "usd": 176, "cl": "Climate-Aligned", "esg": "A", "v": 3.5, "ad": "31 March 2019", "y": 2019}, {"n": "liaoning-industry-upgradation", "c": "China", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "RMB", "amt": 1460, "usd": 204.4, "cl": "Conventional", "esg": "A", "v": 24.2, "ad": "24 Oct 2024", "y": 2024}, {"n": "limpopo-central-hospital-project", "c": "South Africa", "s": "Social Infrastructure", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 200, "usd": 200, "cl": "Conventional", "esg": "B", "v": 8.1, "ad": "25 December 2025", "y": 2025}, {"n": "lingang-china", "c": "China", "s": "Clean Energy", "t": "Sovereign", "st": "Completed", "cur": "RMB", "amt": 525, "usd": 73.5, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": "13 April 2016", "y": 2016}, {"n": "locomotive-fleet-renewal-program", "c": "Russia", "s": "Transport", "t": "Non-Sovereign", "st": "Approved", "cur": null, "amt": null, "usd": null, "cl": "Conventional", "esg": "C", "v": 1.2, "ad": "16 December 2019", "y": 2019}, {"n": "luoyang-metro-projectchina", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 300, "usd": 300, "cl": "Conventional", "esg": "A", "v": null, "ad": "20 July 2018", "y": 2018}, {"n": "madhya-pradesh-bridges-project-india", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 175, "usd": 175, "cl": "Conventional", "esg": "B", "v": 1.1, "ad": "18 September 2018", "y": 2018}, {"n": "madhya-pradesh-major-district-roads-ii-project-india", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 302.44, "usd": 302.4, "cl": "Conventional", "esg": "B", "v": null, "ad": "18 September 2018", "y": 2018}, {"n": "madhya-pradesh-state-highways-improvement-project", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 490, "usd": 490, "cl": "Conventional", "esg": "C", "v": 5.9, "ad": "19 December 2024", "y": 2024}, {"n": "madhya-pradeshindia", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 327.73, "usd": 327.7, "cl": "Conventional", "esg": "C", "v": null, "ad": "22 November 2016", "y": 2016}, {"n": "magalies-bulk-water-supply-scheme-project", "c": "South Africa", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 205, "usd": 205, "cl": "Climate-Aligned", "esg": "B", "v": 7.5, "ad": "25 December 2025", "y": 2025}, {"n": "maranhao-road-corridor-south-north-integration", "c": "Brazil", "s": "Transport", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 71, "usd": 71, "cl": "Conventional", "esg": "B", "v": null, "ad": "5 March 2018", "y": 2018}, {"n": "meghalaya-ecotourism-infrastructure-development-project", "c": "India", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 79.05, "usd": 79, "cl": "Conventional", "esg": "B", "v": 10, "ad": "18 July 2022", "y": 2022}, {"n": "mizoram-tuirini-small-hydro-project", "c": "India", "s": "Clean Energy", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 64.6, "usd": 64.6, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "mp-water-india", "c": "India", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 470, "usd": 470, "cl": "Climate-Aligned", "esg": "B", "v": null, "ad": "30 August 2017", "y": 2017}, {"n": "mumbai-metro-rail-project-india", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 260, "usd": 260, "cl": "Conventional", "esg": "A", "v": 1, "ad": "16 November 2018", "y": 2018}, {"n": "national-investment-and-infrastructure-fund-private-markets-fund-ii", "c": "India", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 100, "usd": 100, "cl": "Conventional", "esg": "C", "v": 5, "ad": "4 December 2025", "y": 2025}, {"n": "ningxia-yinchuan-integrated-green-transport-development-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Completed", "cur": "RMB", "amt": 2100, "usd": 294, "cl": "Climate-Aligned", "esg": "B", "v": 2, "ad": "25 June 2019", "y": 2019}, {"n": "north-dhaka-waste-to-energy-project", "c": "Bangladesh", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 100, "usd": 100, "cl": "Climate-Aligned", "esg": "C", "v": 18, "ad": "27 June 2025", "y": 2025}, {"n": "olifants-management-model-program-phase-2b2b", "c": "South Africa", "s": "Water & Sanitation", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 190, "usd": 190, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "para-sanitation-development-project", "c": "Brazil", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 50, "usd": 50, "cl": "Climate-Aligned", "esg": "C", "v": null, "ad": null, "y": null}, {"n": "para-sustainable-municipalities-project-brazil", "c": "Brazil", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 50, "usd": 50, "cl": "Climate-Aligned", "esg": "B", "v": null, "ad": "2 March 2018", "y": 2018}, {"n": "paraiba-water-supply-infrastructure-project", "c": "Brazil", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 60.95, "usd": 61, "cl": "Climate-Aligned", "esg": "B", "v": null, "ad": null, "y": null}, {"n": "passenger-rail-infrastructure-renewal-project", "c": "South Africa", "s": "Transport", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "pernambuco-water-and-sanitation-efficiency-and-expansion-project", "c": "Brazil", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 202, "usd": 202, "cl": "Climate-Aligned", "esg": "B", "v": 8.7, "ad": "21 February 2023", "y": 2023}, {"n": "ping-an-sustainable-transport-project", "c": "China", "s": "Transport", "t": "Non-Sovereign", "st": "Proposed", "cur": "USD", "amt": 200, "usd": 200, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "pinghaichina", "c": "China", "s": "Clean Energy", "t": "Sovereign", "st": "Completed", "cur": "RMB", "amt": 2000, "usd": 280, "cl": "Climate-Aligned", "esg": "B", "v": null, "ad": "22 November 2016", "y": 2016}, {"n": "piramal-finance-affordable-housing-project", "c": "India", "s": "Social Infrastructure", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 75, "usd": 75, "cl": "Conventional", "esg": "C", "v": 10, "ad": "February 24, 2026", "y": 2026}, {"n": "program-for-upgrade-of-infrastructure-for-metropolitan-municipal-services", "c": "South Africa", "s": "Multiple Areas", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "eskom-renewable-energy-integration-and-transmission-augmentation-project", "c": "South Africa", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 180, "usd": 180, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "qingdao-metro-line-six-phase-i-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "RMB", "amt": 3237, "usd": 453.2, "cl": "Conventional", "esg": "C", "v": 14.7, "ad": "14 December 2021", "y": 2021}, {"n": "rajasthan-water-sector-restructuring-project", "c": "India", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 279.74, "usd": 279.7, "cl": "Climate-Aligned", "esg": "B", "v": 19.4, "ad": "20 November 2017", "y": 2017}, {"n": "rec-renewable-energy-sector-development-project", "c": "India", "s": "Clean Energy", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 300, "usd": 300, "cl": "Climate-Aligned", "esg": "FI", "v": 1.4, "ad": "14 October 2019", "y": 2019}, {"n": "regional-sustainable-infrastructure-development-program", "c": "Brazil", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 500, "usd": 500, "cl": "Climate-Aligned", "esg": "C", "v": 15.6, "ad": "04 December 2025", "y": 2025}, {"n": "renew-peak-power-renewable-energy-project", "c": "India", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Approved", "cur": "INR", "amt": 13200, "usd": 158.4, "cl": "Climate-Aligned", "esg": "C", "v": 3.4, "ad": "17 December 2025", "y": 2025}, {"n": "renewable-energy-sector-development-project", "c": "South Africa", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Completed", "cur": "ZAR", "amt": 1150, "usd": 63.2, "cl": "Climate-Aligned", "esg": "FI", "v": 0.8, "ad": "31 March 2019", "y": 2019}, {"n": "russia-cellular-network-cloud-services-expansion-project", "c": "Russia", "s": "Digital", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 300, "usd": 300, "cl": "Conventional", "esg": "C", "v": 7.2, "ad": "15 December 2020", "y": 2020}, {"n": "russia-development-educational-infrastructure-highly-skilled-workforce", "c": "Russia", "s": "Social Infrastructure", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 500, "usd": 500, "cl": "Conventional", "esg": "B", "v": 2.8, "ad": "24 December 2019", "y": 2019}, {"n": "russia-development-renewable-energy-sector-russia-project", "c": "Russia", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Completed", "cur": "USD", "amt": 300, "usd": 300, "cl": "Climate-Aligned", "esg": "FI-FI-B", "v": 3.2, "ad": "12 September 2019", "y": 2019}, {"n": "russia-krasnodar-cable-car-project", "c": "Russia", "s": "Transport", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 400, "usd": 400, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "russia-russian-maritime-sector-support", "c": "Russia", "s": "Transport", "t": "Non-Sovereign", "st": "Approved", "cur": "EUR", "amt": 53, "usd": 58.3, "cl": "Conventional", "esg": "C", "v": 5.7, "ad": "29 September 2020", "y": 2020}, {"n": "russia-small-historic-cities-development-project-phase-ii-2", "c": "Russia", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "EUR", "amt": 205, "usd": 225.5, "cl": "Conventional", "esg": "B", "v": null, "ad": null, "y": null}, {"n": "russia-toll-road-program-russia", "c": "Russia", "s": "Transport", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 100, "usd": 100, "cl": "Conventional", "esg": "FI", "v": 4.6, "ad": "29 September 2020", "y": 2020}, {"n": "russia-water-management-sanitation-program-russia", "c": "Russia", "s": "Water & Sanitation", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 100, "usd": 100, "cl": "Climate-Aligned", "esg": "FI", "v": 4.6, "ad": "29 September 2020", "y": 2020}, {"n": "russian-upgrade-kaliningrad-sea-port-project", "c": "Russia", "s": "Transport", "t": "Technical Assistance", "st": "Cancelled", "cur": "USD", "amt": 400, "usd": 400, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "sabesp-investment-program", "c": "Brazil", "s": "Water & Sanitation", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 300, "usd": 300, "cl": "Climate-Aligned", "esg": "C", "v": 22.5, "ad": "18 July 2022", "y": 2022}, {"n": "sael-300mw-renewable-energy-project", "c": "India", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 63, "usd": 63, "cl": "Climate-Aligned", "esg": "C", "v": 6.5, "ad": "27 December 2024", "y": 2024}, {"n": "serentica-captive-renewable-energy-project", "c": "India", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 75, "usd": 75, "cl": "Climate-Aligned", "esg": "C", "v": 5.9, "ad": "3 December 2025", "y": 2025}, {"n": "serra-da-palmeira-wind-power-project", "c": "Brazil", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Approved", "cur": "RMB", "amt": 1400, "usd": 196, "cl": "Climate-Aligned", "esg": "C", "v": 16.4, "ad": "17 September 2025", "y": 2025}, {"n": "serra-urban-mobility-project-requalifica-serra", "c": "Brazil", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 57.6, "usd": 57.6, "cl": "Conventional", "esg": "C", "v": null, "ad": null, "y": null}, {"n": "shanxi-taiyuan-wusu-zero-carbon-airport-project", "c": "China", "s": "Clean Energy", "t": "Sovereign", "st": "Approved", "cur": "RMB", "amt": 1448, "usd": 202.7, "cl": "Climate-Aligned", "esg": "B", "v": 12.7, "ad": "14 July 2025", "y": 2025}, {"n": "shimla-innovative-urban-transportation-project", "c": "India", "s": "Transport", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 152.95, "usd": 152.9, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "shriram-finance-sustainable-transport-project", "c": "India", "s": "Transport", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 125, "usd": 125, "cl": "Climate-Aligned", "esg": "C", "v": 4.5, "ad": "29 December 2024", "y": 2024}, {"n": "sll-for-power-distribution-expansion-and-modernization-project", "c": "Brazil", "s": "Clean Energy", "t": "Non-Sovereign", "st": "Proposed", "cur": "RMB", "amt": 950, "usd": 133, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "small-historic-citiesrussia", "c": "Russia", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 220, "usd": 220, "cl": "Conventional", "esg": "B", "v": 2.5, "ad": "28 May 2018", "y": 2018}, {"n": "sorocaba-mobility-and-urban-development-project", "c": "Brazil", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 40, "usd": 40, "cl": "Conventional", "esg": "C", "v": 33.6, "ad": "29 June 2021", "y": 2021}, {"n": "south-africa-battery-energy-storage-project", "c": "South Africa", "s": "Clean Energy", "t": "Sovereign", "st": "Approved", "cur": "ZAR", "amt": 6000, "usd": 330, "cl": "Climate-Aligned", "esg": "B", "v": 3.7, "ad": "16 December 2019", "y": 2019}, {"n": "south-africa-covid-19-emergency-program", "c": "South Africa", "s": "COVID-19", "t": "Sovereign", "st": "Completed", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Conventional", "esg": "B", "v": null, "ad": "19 June 2020", "y": 2020}, {"n": "south-africa-freight-rail-sector-improvement-program", "c": "South Africa", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "ZAR", "amt": 18500, "usd": 1017.5, "cl": "Conventional", "esg": "C", "v": 12.8, "ad": "3 January 2024", "y": 2024}, {"n": "south-africa-municipal-water-supply-and-sanitation-program", "c": "South Africa", "s": "Water & Sanitation", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Climate-Aligned", "esg": "C", "v": null, "ad": null, "y": null}, {"n": "south-african-national-toll-roads-strengthening-improvement-programme", "c": "South Africa", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "ZAR", "amt": 7000, "usd": 385, "cl": "Conventional", "esg": "B", "v": 3.8, "ad": "12 September 2019", "y": 2019}, {"n": "southeast-guwahati-water-supply-project", "c": "India", "s": "Water & Sanitation", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 89.03, "usd": 89, "cl": "Climate-Aligned", "esg": "C", "v": 24.4, "ad": "27 November 2025", "y": 2025}, {"n": "sustainable-infrastructure-relation-zapsibneftekhim-project", "c": "Russia", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Completed", "cur": "USD", "amt": 300, "usd": 300, "cl": "Climate-Aligned", "esg": "A", "v": 9.8, "ad": "18 September 2018", "y": 2018}, {"n": "the-city-bank-sustainable-infrastructure-project", "c": "Bangladesh", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 25, "usd": 25, "cl": "Climate-Aligned", "esg": "C", "v": 12, "ad": "01 April 2025", "y": 2025}, {"n": "the-national-non-toll-roads-management-program", "c": "South Africa", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 1000, "usd": 1000, "cl": "Conventional", "esg": "C", "v": 2, "ad": "15 December 2020", "y": 2020}, {"n": "ufa-eastern-exit", "c": "Russia", "s": "Transport", "t": "Sovereign", "st": "Cancelled", "cur": "USD", "amt": 68.8, "usd": 68.8, "cl": "Conventional", "esg": "B", "v": null, "ad": "20 November 2017", "y": 2017}, {"n": "urban-and-sustainable-infrastructure-program-aracaju-city-of-the-future", "c": "Brazil", "s": "Multiple Areas", "t": "Sovereign", "st": "Approved", "cur": "USD", "amt": 84, "usd": 84, "cl": "Climate-Aligned", "esg": "A", "v": 11.6, "ad": "13 December 2022", "y": 2022}, {"n": "wastewater-integration-and-pipeline-rehabilitation-project", "c": "China", "s": "Water & Sanitation", "t": "Non-Sovereign", "st": "Approved", "cur": "USD", "amt": 50, "usd": 50, "cl": "Climate-Aligned", "esg": "C", "v": 4.3, "ad": "4 December 2025", "y": 2025}, {"n": "water-and-wastewater-services-expansion-project-in-manaus", "c": "Brazil", "s": "Water & Sanitation", "t": "Non-Sovereign", "st": "Cancelled", "cur": "USD", "amt": 80, "usd": 80, "cl": "Climate-Aligned", "esg": "C", "v": 14.2, "ad": "13 December 2022", "y": 2022}, {"n": "wuhan-smart-logistics-hub", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "RMB", "amt": 2415, "usd": 338.1, "cl": "Conventional", "esg": "A", "v": 16.9, "ad": "07 Dec 2024", "y": 2024}, {"n": "wuyi-new-district-general-hospital-project", "c": "China", "s": "Social Infrastructure", "t": null, "st": "Proposed", "cur": "RMB", "amt": 1200, "usd": 168, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "xian-xianyang-international-airport-phase-iii-expansion-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Approved", "cur": "RMB", "amt": 805, "usd": 112.7, "cl": "Conventional", "esg": "A", "v": 10.7, "ad": "18 July 2022", "y": 2022}, {"n": "xinjiang-alashankou-port-infrastructure-development-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Proposed", "cur": "RMB", "amt": 2900, "usd": 406, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "yunnan-yuxi-international-logistics-port-project", "c": "China", "s": "Transport", "t": "Sovereign", "st": "Proposed", "cur": "RMB", "amt": 1491, "usd": 208.7, "cl": "Conventional", "esg": null, "v": null, "ad": null, "y": null}, {"n": "zhejiang-green-urban-project-shengzhou-urban-rural-integrated-water-supply-sanitation-project-phase-ii", "c": "China", "s": "Water & Sanitation", "t": "Sovereign", "st": "Completed", "cur": "RMB", "amt": 825, "usd": 115.5, "cl": "Climate-Aligned", "esg": "C", "v": 2.6, "ad": "31 March 2019", "y": 2019}, {"n": "idc-sustainable-infrastructure-project", "c": "South Africa", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Approved", "cur": "ZAR", "amt": 1000, "usd": 55, "cl": "Climate-Aligned", "esg": "FI-A", "v": 7.2, "ad": "4 December 2025", "y": 2025}, {"n": "credit-guarantee-vehicle", "c": "South Africa", "s": "Multiple Areas", "t": "Non-Sovereign", "st": "Proposed", "cur": "USD", "amt": 100, "usd": 100, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}, {"n": "nesco-power-distribution-system-strengthening-project", "c": "Bangladesh", "s": "Clean Energy", "t": "Sovereign", "st": "Proposed", "cur": "USD", "amt": 125.5, "usd": 125.5, "cl": "Climate-Aligned", "esg": null, "v": null, "ad": null, "y": null}];
+const COST = {"Brazil": 67985.5, "China": 44113.1, "India": 24443.9, "Russia": 17278.7, "South Africa": 23609.5, "Bangladesh": 2293.8};
+const AVG_SHARE = {"Brazil": 59.4, "China": 44.8, "India": 50.2, "Russia": 47.1, "South Africa": 48.2, "Bangladesh": 47.1};
+const CAPITAL = [{"country": "Brazil", "pct": 18.76}, {"country": "Russia", "pct": 18.76}, {"country": "India", "pct": 18.76}, {"country": "China", "pct": 18.76}, {"country": "South Africa", "pct": 18.76}, {"country": "Algeria", "pct": 1.15}, {"country": "Bangladesh", "pct": 1.77}, {"country": "Egypt", "pct": 2.24}, {"country": "UAE", "pct": 1.04}];
+
+// ══════════════════════════════════════════════════════════
+//  NDB PORTFOLIO DASHBOARD - DATA-DRIVEN ENGINE
+//  All KPIs and charts recompute live from PROJECTS (163 rows)
+//  filtered by Country + Project Status.
+// ══════════════════════════════════════════════════════════
+
+// ── PALETTE ───────────────────────────────────────────────
 const P = {
-  // NDB greens (sequential)
   g1:'#1A4731', g2:'#2B6B45', g3:'#3D8B5E', g4:'#5AAD77', g5:'#84C49A', g6:'#B8DEC4',
   lime:'#80BA27', lime2:'#A3CF62',
-  // Functional
   amber:'#D97706', rose:'#B45309', slate:'#64748B',
-  // Country – geographically anchored, colourblind-safe
-  brazil:'#1D7A3A',   // deep green
-  china: '#C0392B',   // chinese red
-  india: '#E07B1A',   // saffron
-  russia:'#2D5F9E',   // blue
-  sa:    '#8B5E3C',   // warm earth
-  // Status palette – professional, sequential
-  approved:  '#2B6B45',
-  completed: '#1A6B8A',
-  proposed:  '#D97706',
-  cancelled: '#94A3B8',
-  // Currency
+  brazil:'#1D7A3A', china:'#C0392B', india:'#E07B1A', russia:'#2D5F9E', sa:'#8B5E3C',
+  approved:'#2B6B45', completed:'#1A6B8A', proposed:'#D97706', cancelled:'#94A3B8',
   usd:'#1A4731', rmb:'#C0392B', eur:'#2D5F9E', zar:'#D97706', inr:'#E07B1A',
-  // Sector (Tableau-inspired categorical)
-  transport:  '#1A4731',
-  cleanenergy:'#80BA27',
-  multiple:   '#3D8B5E',
-  water:      '#1A6B8A',
-  covid:      '#94A3B8',
-  social:     '#D97706',
-  environ:    '#5AAD77',
-  digital:    '#6B21A8',
-  gray:'#CBD5E1'
+  transport:'#1A4731', cleanenergy:'#80BA27', multiple:'#3D8B5E', water:'#1A6B8A',
+  covid:'#94A3B8', social:'#D97706', environ:'#5AAD77', digital:'#6B21A8', gray:'#CBD5E1'
 };
 const CC = {Brazil:P.brazil,China:P.china,India:P.india,Russia:P.russia,'South Africa':P.sa,Bangladesh:'#0E7C6E'};
 const SC = {
@@ -762,64 +697,36 @@ const SC = {
   'Environmental':P.environ,'Digital':P.digital
 };
 
-// ── DATA ──────────────────────────────────────────────────
-const BY_YEAR = [
-  {yr:2016,count:6,ndb:1323.7,climate:5,conv:1,ns:2,sov:4,ta:0,ns_pct:33.3,lc:2,hard:4,russia:1},
-  {yr:2017,count:6,ndb:1752.5,climate:4,conv:2,ns:0,sov:6,ta:0,ns_pct:0,lc:1,hard:5,russia:2},
-  {yr:2018,count:16,ndb:4120.8,climate:7,conv:9,ns:4,sov:12,ta:0,ns_pct:25,lc:3,hard:13,russia:2},
-  {yr:2019,count:19,ndb:5104.8,climate:10,conv:9,ns:4,sov:15,ta:0,ns_pct:21.1,lc:8,hard:11,russia:3},
-  {yr:2020,count:18,ndb:9327.6,climate:3,conv:15,ns:5,sov:13,ta:0,ns_pct:27.8,lc:1,hard:17,russia:4},
-  {yr:2021,count:11,ndb:5313.6,climate:3,conv:8,ns:1,sov:10,ta:0,ns_pct:9.1,lc:2,hard:9,russia:2},
-  {yr:2022,count:15,ndb:2932.8,climate:8,conv:7,ns:4,sov:11,ta:0,ns_pct:26.7,lc:3,hard:12,russia:0},
-  {yr:2023,count:11,ndb:2890.7,climate:6,conv:5,ns:2,sov:9,ta:0,ns_pct:18.2,lc:3,hard:8,russia:0},
-  {yr:2024,count:16,ndb:4536,climate:6,conv:10,ns:5,sov:10,ta:0,ns_pct:31.2,lc:6,hard:10,russia:0},
-  {yr:2025,count:23,ndb:4665,climate:19,conv:4,ns:12,sov:11,ta:0,ns_pct:52.2,lc:6,hard:17,russia:0},
-  {yr:2026,count:4,ndb:1706.6,climate:0,conv:4,ns:1,sov:3,ta:0,ns_pct:25,lc:1,hard:3,russia:0}
-];
-const YEARS = BY_YEAR.map(d=>d.yr);
+// ── CONSTANTS ─────────────────────────────────────────────
 const COUNTRIES = ['Brazil','China','India','Russia','South Africa','Bangladesh'];
-const SECTORS   = ['Transport','Clean Energy','Multiple Areas','Water & Sanitation','COVID-19','Social Infrastructure','Environmental','Digital'];
-const BC = {
-  Brazil:        {count:35,ndb:7572.4,cost:67985.5,sov:24,ns:11,lc_count:3,hard_count:32},
-  China:         {count:41,ndb:11975.1,cost:44113.1,sov:34,ns:6,lc_count:27,hard_count:14},
-  India:         {count:42,ndb:10620.8,cost:24443.9,sov:32,ns:9,lc_count:1,hard_count:41},
-  Russia:        {count:18,ndb:3783.8,cost:17278.7,sov:8,ns:9,lc_count:0,hard_count:18},
-  'South Africa':{count:19,ndb:8339.2,cost:23609.5,sov:15,ns:4,lc_count:6,hard_count:13},
-  Bangladesh:    {count:5,ndb:1147.0,cost:2293.8,sov:3,ns:2,lc_count:0,hard_count:5}
-};
-const BY_SECTOR = {
-  'Transport':{count:57,ndb:18551.5},'COVID-19':{count:9,ndb:8918},
-  'Multiple Areas':{count:28,ndb:6563.9},'Clean Energy':{count:28,ndb:5738},
-  'Water & Sanitation':{count:25,ndb:5332.8},'Social Infrastructure':{count:9,ndb:2274.9},
-  'Environmental':{count:3,ndb:780},'Digital':{count:1,ndb:300}
-};
-const BY_STATUS = {Approved:94,Completed:26,Proposed:22,Cancelled:18};
-const BY_CURR   = {USD:{count:114,ndb:34566.1},RMB:{count:30,ndb:9479.9},EUR:{count:8,ndb:2133.7},ZAR:{count:6,ndb:2124.9},INR:{count:1,ndb:154.4}};
-const VEL_YEAR  = [{yr:2017,avg:10.6},{yr:2018,avg:5.6},{yr:2019,avg:4.3},{yr:2020,avg:5.4},{yr:2021,avg:14.1},{yr:2022,avg:12.5},{yr:2023,avg:12.3},{yr:2024,avg:13.7},{yr:2025,avg:10.4},{yr:2026,avg:10}];
-const VEL_BINS  = {'0–3 months':17,'3–6 months':24,'6–12 months':26,'12–24 months':24,'24+ months':4};
+const SECTORS   = ['Transport','Clean Energy','Multiple Areas','Water & Sanitation','COVID-19','Social Infrastructure','Digital'];
+const STATUSES  = ['Approved','Completed','Proposed','Cancelled'];
+const HARD = new Set(['USD','EUR']);
+const YEARS = [...new Set(PROJECTS.filter(p=>p.y).map(p=>p.y))].sort((a,b)=>a-b);
 
-// Per-country velocity estimates (weighted from known portfolio composition)
-const VEL_C = {
-  Brazil:        {median:10.2, ns_avg:7.1, sov_avg:11.5, with_data:21},
-  China:         {median:9.1,  ns_avg:6.2, sov_avg:9.8,  with_data:29},
-  India:         {median:8.4,  ns_avg:6.4, sov_avg:10.1, with_data:25},
-  Russia:        {median:11.4, ns_avg:7.8, sov_avg:12.2, with_data:12},
-  'South Africa':{median:9.6,  ns_avg:7.2, sov_avg:10.8, with_data:8}
-};
-const HEATMAP   = {
-  Brazil:       {Transport:6,'Clean Energy':6,'Multiple Areas':13,'Water & Sanitation':5,'COVID-19':2,'Social Infrastructure':2,Environmental:1,Digital:0},
-  China:        {Transport:21,'Clean Energy':6,'Multiple Areas':5,'Water & Sanitation':4,'COVID-19':2,'Social Infrastructure':2,Environmental:1,Digital:0},
-  India:        {Transport:19,'Clean Energy':8,'Multiple Areas':3,'Water & Sanitation':9,'COVID-19':2,'Social Infrastructure':1,Environmental:0,Digital:0},
-  Russia:       {Transport:6,'Clean Energy':2,'Multiple Areas':3,'Water & Sanitation':2,'COVID-19':1,'Social Infrastructure':3,Environmental:0,Digital:1},
-  'South Africa':{Transport:5,'Clean Energy':3,'Multiple Areas':3,'Water & Sanitation':4,'COVID-19':2,'Social Infrastructure':1,Environmental:1,Digital:0},
-  Bangladesh:   {Transport:0,'Clean Energy':3,'Multiple Areas':1,'Water & Sanitation':1,'COVID-19':0,'Social Infrastructure':0,Environmental:0,Digital:0}
-};
-const MEMBERS = [
-  {country:'Brazil',pct:18.76},{country:'Russia',pct:18.76},{country:'India',pct:18.76},
-  {country:'China',pct:18.76},{country:'South Africa',pct:18.76},
-  {country:'Algeria',pct:1.15},{country:'Bangladesh',pct:1.77},{country:'Egypt',pct:2.24},{country:'UAE',pct:1.04}
-];
-const R_SECTORS = {Transport:6,'Clean Energy':2,'Multiple Areas':3,'Water & Sanitation':2,'COVID-19':1,'Social Infrastructure':3};
+// ── FILTER STATE ──────────────────────────────────────────
+let AC = []; // active countries (empty = all)
+let AS = []; // active statuses  (empty = all)
+
+function flt()        { return PROJECTS.filter(p => (AC.length===0||AC.includes(p.c)) && (AS.length===0||AS.includes(p.st))); }
+function fltStatus()  { return PROJECTS.filter(p => (AS.length===0||AS.includes(p.st))); }
+function selCountries(){ return AC.length ? AC : COUNTRIES; }
+
+// ── AGGREGATION HELPERS ───────────────────────────────────
+function nonCanc(arr){ return arr.filter(p=>p.st!=='Cancelled'); }
+function sumUSD(arr){ return arr.reduce((s,p)=>s+(p.usd||0),0); }
+function isLC(p){ return p.cur && !HARD.has(p.cur); }
+function cnt(arr,fn){ return arr.filter(fn).length; }
+function pct(n,d){ return d>0 ? (n/d*100).toFixed(1) : '0.0'; }
+function median(a){ if(!a.length) return null; const s=[...a].sort((x,y)=>x-y); const m=Math.floor(s.length/2); return s.length%2 ? s[m] : (s[m-1]+s[m])/2; }
+function mean(a){ return a.length ? a.reduce((s,x)=>s+x,0)/a.length : null; }
+function ndbByYear(arr){ const m={}; YEARS.forEach(y=>m[y]=0); nonCanc(arr).forEach(p=>{ if(p.y) m[p.y]+=(p.usd||0); }); return YEARS.map(y=>+m[y].toFixed(1)); }
+
+// ── DISPLAY HELPERS (project list) ────────────────────────
+function niceName(s){ return String(s).split('-').map(w=> w ? w[0].toUpperCase()+w.slice(1) : w).join(' '); }
+function finStr(p){ if(p.amt==null||p.cur==null) return '—'; return p.cur+' '+Number(p.amt).toLocaleString()+' million'; }
+function dateStr(p){ return p.ad || '—'; }
+function stBadge(st){ const c={Approved:'sb-approved',Completed:'sb-completed',Proposed:'sb-proposed',Cancelled:'sb-cancelled'}[st]||'sb-proposed'; return '<span class="sbadge '+c+'">'+(st||'—')+'</span>'; }
 
 // ── CHART REGISTRY ────────────────────────────────────────
 const charts = {};
@@ -845,583 +752,459 @@ function mk(id, type, data, opts) {
   }
   charts[id] = new Chart(el, { type, data, options: deepMerge(baseOpts, opts||{}) });
 }
-
 const GS = { grid:{color:'#EBF5EE'}, ticks:{color:'#5a7a5a',font:{size:10}} };
 
-// ── FILTER HELPERS ────────────────────────────────────────
-function activeCtries() { return AC.length===0 ? COUNTRIES : AC; }
+function setKPI(id, val){ const el=document.getElementById(id); if(el) el.textContent=val; }
 
-// Per-country yearly NDB: Russia uses known year counts; others share remaining proportionally
-const NR_NDB_MAP = {Brazil:7572.4,China:11975.1,India:10620.8,'South Africa':8339.2,Bangladesh:1147.0};
-const NR_NDB_SUM = Object.values(NR_NDB_MAP).reduce((a,b)=>a+b,0); // 39654.5
+// ── FILTER UI : COUNTRY ───────────────────────────────────
+function toggleMsDropdown(e){ e.stopPropagation(); const dd=document.getElementById('ms-dropdown'), b=document.getElementById('ms-btn'); const o=dd.classList.toggle('open'); b.classList.toggle('open',o); }
+function msToggleAll(cb){ if(cb.checked){ document.querySelectorAll('.ms-cb').forEach(c=>c.checked=false); AC=[]; updateMsLabel(); rerender(); } else { cb.checked=true; } }
+function msChange(){ const sel=[...document.querySelectorAll('.ms-cb:checked')].map(c=>c.value); document.getElementById('ms-all').checked=sel.length===0; AC=sel; updateMsLabel(); rerender(); }
+function updateMsLabel(){ const l=document.getElementById('ms-label'); if(AC.length===0) l.innerHTML='All Member Countries'; else if(AC.length===1) l.innerHTML=AC[0]; else l.innerHTML='Countries <span class="ms-badge">'+AC.length+'</span>'; }
 
-function cYearNDB(country, d) {
-  if (country==='Russia') return d.yr<=2021 ? +(d.russia/14*BC.Russia.ndb).toFixed(1) : 0;
-  const rUsed = d.yr<=2021 ? d.russia/14*BC.Russia.ndb : 0;
-  return +(Math.max(0, d.ndb-rUsed)*(NR_NDB_MAP[country]||0)/NR_NDB_SUM).toFixed(1);
-}
+// ── FILTER UI : STATUS ────────────────────────────────────
+function toggleStDropdown(e){ e.stopPropagation(); const dd=document.getElementById('st-dropdown'), b=document.getElementById('st-btn'); const o=dd.classList.toggle('open'); b.classList.toggle('open',o); }
+function stToggleAll(cb){ if(cb.checked){ document.querySelectorAll('.st-cb').forEach(c=>c.checked=false); AS=[]; updateStLabel(); rerender(); } else { cb.checked=true; } }
+function stChange(){ const sel=[...document.querySelectorAll('.st-cb:checked')].map(c=>c.value); document.getElementById('st-all').checked=sel.length===0; AS=sel; updateStLabel(); rerender(); }
+function updateStLabel(){ const l=document.getElementById('st-label'); if(AS.length===0) l.innerHTML='All Statuses'; else if(AS.length===1) l.innerHTML=AS[0]; else l.innerHTML='Statuses <span class="ms-badge">'+AS.length+'</span>'; }
 
-// Per-country sector NDB: scale by country's NDB-per-project × sector project count from heatmap
-function cSectorNDB(country, sector) {
-  const cnt = HEATMAP[country]?.[sector]||0;
-  return +(cnt*(BC[country]?.ndb||0)/(BC[country]?.count||1)).toFixed(1);
-}
+document.addEventListener('click', ()=>{
+  ['ms-dropdown','ms-btn','st-dropdown','st-btn'].forEach(id=>document.getElementById(id)?.classList.remove('open'));
+});
 
-// Climate projects per country (climate% × project count)
-const CLIMATE_PROJ = {Brazil:22,China:16,India:18,Russia:5,'South Africa':8,Bangladesh:5};
-
-function setKPI(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = val;
-}
-
-function calcClimatePct(cl) {
-  const proj  = cl.reduce((s,c)=>s+(CLIMATE_PROJ[c]||0),0);
-  const total = cl.reduce((s,c)=>s+(BC[c]?.count||0),0);
-  return total>0 ? (proj/total*100).toFixed(1) : '0.0';
-}
-function calcNSPct(cl) {
-  const ns    = cl.reduce((s,c)=>s+(BC[c]?.ns||0),0);
-  const total = cl.reduce((s,c)=>s+(BC[c]?.count||0),0);
-  return total>0 ? (ns/total*100).toFixed(1) : '0.0';
-}
-function calcLCPct(cl) {
-  const lc    = cl.reduce((s,c)=>s+(BC[c]?.lc_count||0),0);
-  const total = cl.reduce((s,c)=>s+(BC[c]?.count||0),0);
-  return total>0 ? (lc/total*100).toFixed(1) : '0.0';
+function resetFilter(){
+  AC=[]; AS=[];
+  document.querySelectorAll('.ms-cb').forEach(c=>c.checked=false);
+  document.querySelectorAll('.st-cb').forEach(c=>c.checked=false);
+  document.getElementById('ms-all').checked=true;
+  document.getElementById('st-all').checked=true;
+  updateMsLabel(); updateStLabel(); rerender();
 }
 
 // ── NAVIGATION ────────────────────────────────────────────
-function showPage(id, btn) {
+function showPage(id, btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
-  // Hide filter on Russia & Strategic Insights pages
-  document.querySelector('.filterbar').style.display =
-    (id==='russia' || id==='insights') ? 'none' : 'flex';
+  document.querySelector('.filterbar').style.display = (id==='insights') ? 'none' : 'flex';
   setTimeout(()=>render(id), 40);
 }
-let AC = []; // empty array = All countries
-
-function toggleMsDropdown(e) {
-  e.stopPropagation();
-  const dd  = document.getElementById('ms-dropdown');
-  const btn = document.getElementById('ms-btn');
-  const open = dd.classList.toggle('open');
-  btn.classList.toggle('open', open);
-}
-document.addEventListener('click', () => {
-  document.getElementById('ms-dropdown')?.classList.remove('open');
-  document.getElementById('ms-btn')?.classList.remove('open');
-});
-function msToggleAll(cb) {
-  if (cb.checked) {
-    document.querySelectorAll('.ms-cb').forEach(c => c.checked = false);
-    AC = [];
-    updateMsLabel();
-    rerender();
-  } else {
-    cb.checked = true; // keep "All" checked if user tries to uncheck it with nothing else selected
-  }
-}
-function msChange() {
-  const selected = [...document.querySelectorAll('.ms-cb:checked')].map(c => c.value);
-  document.getElementById('ms-all').checked = selected.length === 0;
-  AC = selected;
-  updateMsLabel();
-  rerender();
-}
-function updateMsLabel() {
-  const lbl = document.getElementById('ms-label');
-  if (AC.length === 0)      lbl.innerHTML = 'All Member Countries';
-  else if (AC.length === 1) lbl.innerHTML = AC[0];
-  else                      lbl.innerHTML = 'Countries <span class="ms-badge">'+AC.length+'</span>';
-}
-function resetFilter() {
-  AC = [];
-  document.querySelectorAll('.ms-cb').forEach(c => c.checked = false);
-  document.getElementById('ms-all').checked = true;
-  updateMsLabel();
-  rerender();
-}
-function rerender() { const a=document.querySelector('.page.active'); if(a) render(a.id.replace('page-','')); }
-function render(id) {
+function rerender(){ const a=document.querySelector('.page.active'); if(a) render(a.id.replace('page-','')); }
+function render(id){
   if(id==='overview')  renderOverview();
   if(id==='country')   renderCountry();
   if(id==='sector')    renderSector();
   if(id==='sovereign') renderSovereign();
   if(id==='lc')        renderLC();
   if(id==='velocity')  renderVelocity();
-  if(id==='russia')    renderRussia();
-}
-function sc() {
-  if (AC.length === 0) return 1;
-  const total = AC.reduce((s,c) => s + (BC[c]?.count||0), 0);
-  return total / 160;
+  if(id==='insights')  renderInsights();
 }
 
-// ── PAGE 1: OVERVIEW ──────────────────────────────────────
-function renderOverview() {
-  const cl = activeCtries();
+// ══════════════════════════════════════════════════════════
+//  PAGE 1 : OVERVIEW
+// ══════════════════════════════════════════════════════════
+function renderOverview(){
+  const W   = flt();
+  const cl  = selCountries();
   const isAll = AC.length===0;
+  const Wnc = nonCanc(W);
+  const nCanc = W.length - Wnc.length;
 
-  // KPI cards
-  const totalProj  = cl.reduce((s,c)=>s+(BC[c]?.count||0),0);
-  const activeProj = isAll ? BY_STATUS.Approved : Math.round(totalProj * BY_STATUS.Approved / 160);
-  const totalNDBv  = cl.reduce((s,c)=>s+(BC[c]?.ndb||0),0);
-  const climPct    = calcClimatePct(cl);
-  const nsPct      = calcNSPct(cl);
-  const lcPct      = calcLCPct(cl);
-  const label      = isAll ? 'All statuses across 6 member countries' : cl.join(', ');
-  setKPI('kv-total-proj', totalProj);
-  setKPI('ks-total-proj', label);
-  setKPI('kv-active-proj', activeProj);
-  setKPI('ks-active-proj', 'of '+totalProj+' total - approved & ongoing');
-  setKPI('kv-ndb', '$'+Math.round(totalNDBv).toLocaleString());
+  const totalProj  = Wnc.length;                                              // excl cancelled
+  const activeProj = cnt(W, p=>p.st!=='Cancelled' && p.st!=='Completed');     // excl cancelled & completed
+  const ndb        = sumUSD(Wnc);                                             // excl cancelled
+  const withCur    = W.filter(p=>p.cur);
+
+  setKPI('kv-total-proj', totalProj.toLocaleString());
+  setKPI('ks-total-proj', nCanc>0 ? 'Excluding '+nCanc+' cancelled' : 'Excluding cancelled');
+  setKPI('kv-active-proj', activeProj.toLocaleString());
+  setKPI('ks-active-proj', 'Excluding cancelled & completed');
+  setKPI('kv-ndb', '$'+Math.round(ndb).toLocaleString());
+  setKPI('ks-ndb', 'Excluding cancelled');
+  const climPct = pct(cnt(W,p=>p.cl==='Climate-Aligned'), W.length);
   setKPI('kv-climate', climPct+'%');
   setKPI('ks-climate', +climPct>=40 ? '40% strategic target - exceeded' : '40% strategic target - in progress');
-  setKPI('kv-ns-share', nsPct+'%');
+  setKPI('kv-ns-share', pct(cnt(W,p=>p.t==='Non-Sovereign'), W.length)+'%');
+  const lcPct = pct(cnt(W,isLC), withCur.length);
   setKPI('kv-lc-share', lcPct+'%');
   setKPI('ks-lc-share', +lcPct>=30 ? '30% target - reached' : 'Progressing toward 30% target');
 
-  // Annual commitments - stacked by country when filtered, single bar when all
+  // Annual commitments (excl cancelled)
   if (isAll) {
     mk('c-year-ndb','bar',
-      {labels:YEARS, datasets:[{
-        label:'NDB Commitments (USD M)',
-        data:BY_YEAR.map(d=>d.ndb),
-        backgroundColor:BY_YEAR.map(d=>d.yr>=2022?P.lime2:P.g3),
-        borderRadius:5, borderSkipped:false
-      }]},
+      {labels:YEARS, datasets:[{label:'NDB Commitments (USD M)', data:ndbByYear(W),
+        backgroundColor:YEARS.map(y=>y>=2022?P.lime2:P.g3), borderRadius:5, borderSkipped:false}]},
       {plugins:{legend:{display:false}},
-       scales:{x:{...GS,grid:{display:false}},y:{...GS,title:{display:true,text:'USD Million',color:'#5a7a5a',font:{size:10}}}}}
-    );
+       scales:{x:{...GS,grid:{display:false}},y:{...GS,title:{display:true,text:'USD Million',color:'#5a7a5a',font:{size:10}}}}});
   } else {
     mk('c-year-ndb','bar',
-      {labels:YEARS, datasets:cl.map(c=>({
-        label:c, data:BY_YEAR.map(d=>cYearNDB(c,d)),
-        backgroundColor:CC[c]||P.g3, borderRadius:2
-      }))},
+      {labels:YEARS, datasets:cl.map(c=>({label:c, data:ndbByYear(W.filter(p=>p.c===c)),
+        backgroundColor:CC[c]||P.g3, borderRadius:2}))},
       {plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}},
-       scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS,title:{display:true,text:'USD Million',color:'#5a7a5a',font:{size:10}}}}}
-    );
+       scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS,title:{display:true,text:'USD Million',color:'#5a7a5a',font:{size:10}}}}});
   }
 
-  // Status donut - derive from BC counts when filtered
-  let statD;
-  if (isAll) {
-    statD = [BY_STATUS.Approved,BY_STATUS.Completed,BY_STATUS.Proposed,BY_STATUS.Cancelled];
-  } else {
-    const tot = cl.reduce((s,c)=>s+(BC[c]?.count||0),0);
-    statD = [Math.round(tot*0.5875),Math.round(tot*0.1625),Math.round(tot*0.1375),Math.round(tot*0.1125)];
-  }
+  // Status donut
   mk('c-status-donut','doughnut',
-    {labels:['Approved','Completed','Proposed','Cancelled'],
-     datasets:[{data:statD,backgroundColor:[P.approved,P.completed,P.proposed,P.cancelled],
-       borderWidth:3,borderColor:'#fff',hoverOffset:6}]},
-    {plugins:{legend:{position:'bottom'}},cutout:'60%'}
-  );
+    {labels:STATUSES, datasets:[{data:STATUSES.map(s=>cnt(W,p=>p.st===s)),
+      backgroundColor:[P.approved,P.completed,P.proposed,P.cancelled], borderWidth:3, borderColor:'#fff', hoverOffset:6}]},
+    {plugins:{legend:{position:'bottom'}}, cutout:'60%'});
 
-  // Sector bar - use heatmap-derived NDB per country when filtered
-  const sOrd=['Transport','COVID-19','Multiple Areas','Clean Energy','Water & Sanitation','Social Infrastructure','Environmental','Digital'];
+  // Sector commitments (excl cancelled)
+  const sOrd=['Transport','COVID-19','Multiple Areas','Clean Energy','Water & Sanitation','Social Infrastructure','Digital'];
   mk('c-sector-bar','bar',
-    {labels:sOrd, datasets:[{
-      label:'NDB Commitments (USD M)',
-      data:sOrd.map(sec=>isAll?(BY_SECTOR[sec]?.ndb||0):+cl.reduce((s,c)=>s+cSectorNDB(c,sec),0).toFixed(1)),
-      backgroundColor:sOrd.map(s=>SC[s]||P.g3), borderRadius:4
-    }]},
+    {labels:sOrd, datasets:[{label:'NDB Commitments (USD M)',
+      data:sOrd.map(s=>+sumUSD(nonCanc(W.filter(p=>p.s===s))).toFixed(1)),
+      backgroundColor:sOrd.map(s=>SC[s]||P.g3), borderRadius:4}]},
     {indexAxis:'y',plugins:{legend:{display:false}},
-     scales:{x:{...GS,title:{display:true,text:'USD M',color:'#5a7a5a',font:{size:10}}},y:{...GS,grid:{display:false}}}}
-  );
+     scales:{x:{...GS,title:{display:true,text:'USD M',color:'#5a7a5a',font:{size:10}}},y:{...GS,grid:{display:false}}}});
 
-  // Country bar - show only selected countries
+  // Country commitments (excl cancelled)
   mk('c-country-bar','bar',
-    {labels:cl, datasets:[{
-      label:'NDB Commitments (USD M)',
-      data:cl.map(c=>BC[c]?.ndb||0),
-      backgroundColor:cl.map(c=>CC[c]||P.g3), borderRadius:5
-    }]},
-    {plugins:{legend:{display:false}},
-     scales:{x:{...GS,grid:{display:false}},y:{...GS}}}
-  );
+    {labels:cl, datasets:[{label:'NDB Commitments (USD M)',
+      data:cl.map(c=>+sumUSD(nonCanc(W.filter(p=>p.c===c))).toFixed(1)),
+      backgroundColor:cl.map(c=>CC[c]||P.g3), borderRadius:5}]},
+    {plugins:{legend:{display:false}}, scales:{x:{...GS,grid:{display:false}},y:{...GS}}});
 }
 
-// ── PAGE 2: COUNTRY ───────────────────────────────────────
-function renderCountry() {
-  const cl = activeCtries();
+// ══════════════════════════════════════════════════════════
+//  PAGE 2 : COUNTRY ANALYSIS
+// ══════════════════════════════════════════════════════════
+function renderCountry(){
+  const W  = flt();
+  const cl = selCountries();
 
-  // Filter table rows
-  document.querySelectorAll('#country-tbody tr').forEach(tr => {
-    tr.style.display = (AC.length===0 || AC.includes(tr.dataset.country)) ? '' : 'none';
+  // Summary table (rebuilt from data)
+  const tb = document.getElementById('country-tbody');
+  let html='';
+  cl.forEach(c=>{
+    const cr  = W.filter(p=>p.c===c);
+    const crc = nonCanc(cr);
+    const ndb = sumUSD(crc);
+    const sov = cnt(cr,p=>p.t==='Sovereign'), ns = cnt(cr,p=>p.t==='Non-Sovereign');
+    const climp = pct(cnt(cr,p=>p.cl==='Climate-Aligned'), cr.length);
+    const lcc = cr.filter(p=>p.cur);
+    const lcp = pct(cnt(cr,isLC), lcc.length);
+    const lcColor = +lcp>=30?'var(--g2)': +lcp>0?'var(--amber)':'var(--slate)';
+    const cost = COST[c]!=null ? '$'+COST[c].toLocaleString() : '—';
+    const shr  = AVG_SHARE[c]!=null ? AVG_SHARE[c].toFixed(1)+'%' : '—';
+    const bd   = c==='Bangladesh' ? ' style="border-top:2px dashed var(--border)"' : '';
+    const nm   = c==='Bangladesh' ? '<strong>Bangladesh</strong> <small style="color:var(--slate);font-size:9px">New Member 2021</small>' : '<strong>'+c+'</strong>';
+    html += `<tr data-country="${c}"${bd}>`
+      + `<td>${nm}</td><td>${cr.length}</td><td>$${ndb.toLocaleString(undefined,{minimumFractionDigits:1,maximumFractionDigits:1})}</td>`
+      + `<td>${cost}</td><td>${shr}</td><td>${climp}%</td>`
+      + `<td style="color:${lcColor};font-weight:700">${lcp}%</td>`
+      + `<td><span class="tag tag-g">SOV ${sov}</span> <span class="tag tag-l">NS ${ns}</span></td></tr>`;
   });
+  tb.innerHTML = html;
 
-  // Capital pie - highlight selected, grey others
-  const mColors = MEMBERS.map(m =>
-    AC.length===0 ? (CC[m.country]||'#607D8B') :
-    AC.includes(m.country) ? (CC[m.country]||'#607D8B') : '#D1D5DB'
-  );
+  // Capital subscription pie
+  const mColors = CAPITAL.map(m => AC.length===0 ? (CC[m.country]||'#607D8B') : AC.includes(m.country) ? (CC[m.country]||'#607D8B') : '#D1D5DB');
   mk('c-member-pie','doughnut',
-    {labels:MEMBERS.map(m=>m.country),
-     datasets:[{data:MEMBERS.map(m=>m.pct),
-       backgroundColor:mColors, borderWidth:3, borderColor:'#fff', hoverOffset:5}]},
-    {plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}}}, cutout:'48%'}
-  );
+    {labels:CAPITAL.map(m=>m.country), datasets:[{data:CAPITAL.map(m=>m.pct),
+      backgroundColor:mColors, borderWidth:3, borderColor:'#fff', hoverOffset:5}]},
+    {plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}}}, cutout:'48%'});
 
-  // Deployment ratio - filter to selected countries
-  const totalNDB = COUNTRIES.reduce((s,c)=>s+(BC[c]?.ndb||0),0);
-  const ratios   = cl.map(c=>+((BC[c]?.ndb||0)/totalNDB*100/18.76).toFixed(2));
+  // Deployment ratio vs capital share (denominator = all countries under current status filter)
+  const allNc = nonCanc(fltStatus());
+  const totalNDB = sumUSD(allNc) || 1;
+  const capMap = {}; CAPITAL.forEach(m=>capMap[m.country]=m.pct);
+  const ratios = cl.map(c=>{
+    const share = sumUSD(nonCanc(fltStatus().filter(p=>p.c===c)))/totalNDB*100;
+    const cap = capMap[c]||18.76;
+    return +(share/cap).toFixed(2);
+  });
   mk('c-deploy','bar',
-    {labels:cl,
-     datasets:[
-       {label:'Deployment Ratio',data:ratios,backgroundColor:cl.map(c=>CC[c]),borderRadius:5},
-       {type:'line',label:'Proportional Benchmark (1.0×)',data:cl.map(()=>1),
-        borderColor:P.g1,borderDash:[5,4],borderWidth:1.8,pointRadius:0,fill:false}
-     ]},
+    {labels:cl, datasets:[
+      {label:'Deployment Ratio',data:ratios,backgroundColor:cl.map(c=>CC[c]),borderRadius:5},
+      {type:'line',label:'Proportional Benchmark (1.0×)',data:cl.map(()=>1),borderColor:P.g1,borderDash:[5,4],borderWidth:1.8,pointRadius:0,fill:false}
+    ]},
     {plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}},
-     scales:{x:{...GS,grid:{display:false}},
-             y:{...GS,title:{display:true,text:'Ratio (1.0× = proportional to capital)',color:'#5a7a5a',font:{size:10}}}}}
-  );
+     scales:{x:{...GS,grid:{display:false}},y:{...GS,title:{display:true,text:'Ratio (1.0× = proportional to capital)',color:'#5a7a5a',font:{size:10}}}}});
+
+  renderProjectList(W);
 }
 
-// ── PAGE 3: SECTOR & CLIMATE ──────────────────────────────
-function renderSector() {
-  const cl = activeCtries();
-  const isAll = AC.length===0;
-  const s = sc();
+// ── PROJECT LIST (photo format + Status) ──────────────────
+function renderProjectList(W){
+  const cls = selCountries().filter(c => W.some(p=>p.c===c));
+  const order = ['Sovereign','Non-Sovereign','Technical Assistance'];
+  const grpLabel = {'Sovereign':'Sovereign Projects','Non-Sovereign':'Private Sector Non-Sovereign Projects','Technical Assistance':'Technical Assistance'};
+  let h='<thead><tr><th style="width:46%">Project Name</th><th>NDB Approved Financing</th><th>Date of Approval</th><th>Status</th></tr></thead><tbody>';
+  if(!W.length){
+    h+='<tr><td colspan="4" style="text-align:center;color:var(--slate);padding:18px">No projects match the current filters.</td></tr>';
+  }
+  cls.forEach(c=>{
+    const cr = W.filter(p=>p.c===c);
+    h += `<tr class="ctry"><td colspan="4">${c} &nbsp;&middot;&nbsp; ${cr.length} project${cr.length!==1?'s':''}</td></tr>`;
+    const sortFn = (a,b)=>(b.y||0)-(a.y||0) || niceName(a.n).localeCompare(niceName(b.n));
+    order.forEach(t=>{
+      const tr = cr.filter(p=>p.t===t).sort(sortFn);
+      if(!tr.length) return;
+      h += `<tr class="grp"><td colspan="4">${grpLabel[t]} (${tr.length})</td></tr>`;
+      tr.forEach(p=>{ h += `<tr><td class="pname">${niceName(p.n)}</td><td class="pfin">${finStr(p)}</td><td class="pdate">${dateStr(p)}</td><td>${stBadge(p.st)}</td></tr>`; });
+    });
+    const others = cr.filter(p=>!order.includes(p.t)).sort(sortFn);
+    if(others.length){
+      h += `<tr class="grp"><td colspan="4">Other (${others.length})</td></tr>`;
+      others.forEach(p=>{ h += `<tr><td class="pname">${niceName(p.n)}</td><td class="pfin">${finStr(p)}</td><td class="pdate">${dateStr(p)}</td><td>${stBadge(p.st)}</td></tr>`; });
+    }
+  });
+  h+='</tbody>';
+  document.getElementById('project-list').innerHTML = h;
+  const title = AC.length===0 ? 'All Member Countries' : AC.join(', ');
+  document.getElementById('pl-title').textContent = 'List of Projects - '+title;
+  document.getElementById('pl-count').textContent = W.length+' project'+(W.length!==1?'s':'')+' shown'+(AS.length ? ' · status: '+AS.join(', ') : '');
+}
 
-  // KPI cards
-  const climPct2   = calcClimatePct(cl);
-  const climProj   = cl.reduce((t,c)=>t+(CLIMATE_PROJ[c]||0),0);
-  const totalProj2 = cl.reduce((t,c)=>t+(BC[c]?.count||0),0);
-  const digitalCnt = cl.reduce((t,c)=>t+(HEATMAP[c]?.Digital||0),0);
-  const transpCnt  = cl.reduce((t,c)=>t+(HEATMAP[c]?.Transport||0),0);
-  const transpPct  = totalProj2>0 ? (transpCnt/totalProj2*100).toFixed(1) : '0.0';
-  setKPI('kv-s-climate', climPct2+'%');
-  setKPI('ks-s-climate', +climPct2>=40 ? '40% target - exceeded by '+(climPct2-40).toFixed(1)+' pp' : '40% target - in progress');
-  setKPI('kv-s-climate-proj', climProj);
-  setKPI('ks-s-climate-proj', 'of '+totalProj2+' total projects');
-  setKPI('kv-s-digital', digitalCnt);
-  setKPI('kv-s-transport', transpCnt);
-  setKPI('ks-s-transport', transpPct+'% of selected portfolio');
+// ══════════════════════════════════════════════════════════
+//  PAGE 3 : SECTOR & CLIMATE
+// ══════════════════════════════════════════════════════════
+function renderSector(){
+  const W  = flt();
+  const cl = selCountries();
 
-  const sOrd=['Transport','Multiple Areas','Clean Energy','Water & Sanitation','COVID-19','Social Infrastructure','Environmental','Digital'];
-  // Project count - sum heatmap for selected countries
+  setKPI('kv-s-climate', pct(cnt(W,p=>p.cl==='Climate-Aligned'),W.length)+'%');
+  const cp = +pct(cnt(W,p=>p.cl==='Climate-Aligned'),W.length);
+  setKPI('ks-s-climate', cp>=40 ? '40% target - exceeded by '+(cp-40).toFixed(1)+' pp' : '40% target - in progress');
+  setKPI('kv-s-climate-proj', cnt(W,p=>p.cl==='Climate-Aligned'));
+  setKPI('ks-s-climate-proj', 'of '+W.length+' projects in view');
+  setKPI('kv-s-digital', cnt(W,p=>p.s==='Digital'));
+  const tCnt = cnt(W,p=>p.s==='Transport');
+  setKPI('kv-s-transport', tCnt);
+  setKPI('ks-s-transport', pct(tCnt,W.length)+'% of portfolio in view');
+
+  const sOrd=['Transport','Multiple Areas','Clean Energy','Water & Sanitation','COVID-19','Social Infrastructure','Digital'];
   mk('c-sector-count','bar',
-    {labels:sOrd,
-     datasets:[{label:'Projects',
-       data:sOrd.map(sec=>isAll?(BY_SECTOR[sec]?.count||0):cl.reduce((t,c)=>t+(HEATMAP[c]?.[sec]||0),0)),
-       backgroundColor:sOrd.map(s=>SC[s]||P.g3),borderRadius:4}]},
-    {indexAxis:'y',plugins:{legend:{display:false}},
-     scales:{x:{...GS},y:{...GS,grid:{display:false}}}}
-  );
-  // Climate trend - scale proportionally by selected country share
+    {labels:sOrd, datasets:[{label:'Projects', data:sOrd.map(s=>cnt(W,p=>p.s===s)),
+      backgroundColor:sOrd.map(s=>SC[s]||P.g3),borderRadius:4}]},
+    {indexAxis:'y',plugins:{legend:{display:false}}, scales:{x:{...GS},y:{...GS,grid:{display:false}}}});
+
   mk('c-climate-trend','bar',
-    {labels:YEARS,
-     datasets:[
-       {label:'Climate Finance',data:BY_YEAR.map(d=>+(d.climate*s).toFixed(1)),backgroundColor:P.lime,borderRadius:2},
-       {label:'Conventional',data:BY_YEAR.map(d=>+(d.conv*s).toFixed(1)),backgroundColor:P.g6,borderRadius:2}
-     ]},
-    {plugins:{legend:{position:'bottom'}},
-     scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS}}}
-  );
-  // Heatmap - filter rows to selected countries only
-  const maxV = Math.max(...cl.flatMap(c=>SECTORS.map(s=>HEATMAP[c]?.[s]||0)));
+    {labels:YEARS, datasets:[
+      {label:'Climate Finance',data:YEARS.map(y=>cnt(W,p=>p.y===y&&p.cl==='Climate-Aligned')),backgroundColor:P.lime,borderRadius:2},
+      {label:'Conventional',data:YEARS.map(y=>cnt(W,p=>p.y===y&&p.cl!=='Climate-Aligned')),backgroundColor:P.g6,borderRadius:2}
+    ]},
+    {plugins:{legend:{position:'bottom'}}, scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS}}});
+
+  // Heatmap
+  const grid = {}; cl.forEach(c=>{ grid[c]={}; SECTORS.forEach(s=>grid[c][s]=cnt(W,p=>p.c===c&&p.s===s)); });
+  const maxV = Math.max(1, ...cl.flatMap(c=>SECTORS.map(s=>grid[c][s])));
   const hDiv = document.getElementById('heatmap-container');
   if(hDiv){
-    const shS = s => s.replace('Water & Sanitation','W&S').replace('Social Infrastructure','Social').replace('Environmental','Enviro.');
+    const shS = s => s.replace('Water & Sanitation','W&S').replace('Social Infrastructure','Social').replace('Enviro.');
     let h='<table class="hmt"><thead><tr><th style="text-align:left">Country</th>';
-    SECTORS.forEach(s=>h+=`<th>${shS(s)}</th>`);
-    h+='</tr></thead><tbody>';
+    SECTORS.forEach(s=>h+=`<th>${shS(s)}</th>`); h+='</tr></thead><tbody>';
     cl.forEach(c=>{
       h+=`<tr><td class="rh">${c}</td>`;
-      SECTORS.forEach(s=>{
-        const cnt=HEATMAP[c]?.[s]||0;
-        const int=maxV>0?cnt/maxV:0;
-        const bg=cnt>0?`rgba(43,107,69,${0.07+int*0.8})`:'#F8FBF7';
-        const col=int>0.42?'#fff':'#1A4731';
-        h+=`<td style="background:${bg};color:${col}">${cnt||''}</td>`;
-      });
+      SECTORS.forEach(s=>{ const v=grid[c][s], i=v/maxV; const bg=v>0?`rgba(43,107,69,${0.07+i*0.8})`:'#F8FBF7'; const col=i>0.42?'#fff':'#1A4731'; h+=`<td style="background:${bg};color:${col}">${v||''}</td>`; });
       h+='</tr>';
     });
-    h+='</tbody></table>';
-    hDiv.innerHTML=h;
+    h+='</tbody></table>'; hDiv.innerHTML=h;
   }
 }
 
-// ── PAGE 4: SOVEREIGN MIX ─────────────────────────────────
-function renderSovereign() {
-  const cl = activeCtries();
-  const s = sc();
+// ══════════════════════════════════════════════════════════
+//  PAGE 4 : SOVEREIGN MIX
+// ══════════════════════════════════════════════════════════
+function renderSovereign(){
+  const W  = flt();
+  const cl = selCountries();
 
-  // KPI cards
-  const totalNS    = cl.reduce((t,c)=>t+(BC[c]?.ns||0),0);
-  const totalProj3 = cl.reduce((t,c)=>t+(BC[c]?.count||0),0);
-  const nsPct3     = calcNSPct(cl);
+  const totalNS = cnt(W,p=>p.t==='Non-Sovereign');
   setKPI('kv-sov-ns-total', totalNS);
-  setKPI('ks-sov-ns-total', 'of '+totalProj3+' projects ('+nsPct3+'%)');
-  // Top NS country in selection
-  const topNS = cl.slice().sort((a,b)=>(BC[b]?.ns||0)-(BC[a]?.ns||0))[0];
-  if (topNS) {
-    setKPI('kl-sov-ns-country', topNS+' Non-Sovereign Projects');
-    setKPI('kv-sov-ns-country', BC[topNS]?.ns||0);
-    setKPI('ks-sov-ns-country', 'Leading NS country in selected portfolio');
-  }
+  setKPI('ks-sov-ns-total', 'of '+W.length+' projects ('+pct(totalNS,W.length)+'%)');
+  setKPI('kv-ta', cnt(W,p=>p.t==='Technical Assistance'));
+  // NS share in 2025
+  const y25 = W.filter(p=>p.y===2025);
+  setKPI('kv-ns-2025', y25.length ? pct(cnt(y25,p=>p.t==='Non-Sovereign'),y25.length)+'%' : '—');
+  // top NS country
+  const topNS = cl.slice().sort((a,b)=>cnt(W,p=>p.c===b&&p.t==='Non-Sovereign')-cnt(W,p=>p.c===a&&p.t==='Non-Sovereign'))[0];
+  if(topNS){ setKPI('kl-sov-ns-country', topNS+' Non-Sovereign Projects'); setKPI('kv-sov-ns-country', cnt(W,p=>p.c===topNS&&p.t==='Non-Sovereign')); setKPI('ks-sov-ns-country','Leading NS country in current view'); }
 
   mk('c-sov-stack','bar',
-    {labels:YEARS,
-     datasets:[
-       {label:'Sovereign',data:BY_YEAR.map(d=>Math.round(d.sov*s)),backgroundColor:P.g1,borderRadius:2},
-       {label:'Non-Sovereign (NS)',data:BY_YEAR.map(d=>Math.round(d.ns*s)),backgroundColor:P.lime,borderRadius:2},
-       {label:'Technical Assistance (TA)',data:BY_YEAR.map(d=>d.ta),backgroundColor:P.amber,borderRadius:2}
-     ]},
-    {plugins:{legend:{position:'bottom'}},
-     scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS}}}
-  );
+    {labels:YEARS, datasets:[
+      {label:'Sovereign',data:YEARS.map(y=>cnt(W,p=>p.y===y&&p.t==='Sovereign')),backgroundColor:P.g1,borderRadius:2},
+      {label:'Non-Sovereign (NS)',data:YEARS.map(y=>cnt(W,p=>p.y===y&&p.t==='Non-Sovereign')),backgroundColor:P.lime,borderRadius:2},
+      {label:'Technical Assistance (TA)',data:YEARS.map(y=>cnt(W,p=>p.y===y&&p.t==='Technical Assistance')),backgroundColor:P.amber,borderRadius:2}
+    ]},
+    {plugins:{legend:{position:'bottom'}}, scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS}}});
+
   mk('c-ns-trend','line',
-    {labels:YEARS,
-     datasets:[{label:'Non-Sovereign Share (%)',data:BY_YEAR.map(d=>d.ns_pct),
-       borderColor:P.lime,backgroundColor:P.lime+'25',fill:true,tension:0.35,
-       pointRadius:4,pointBackgroundColor:P.lime,pointBorderColor:'#fff',pointBorderWidth:2}]},
-    {plugins:{legend:{display:false}},
-     scales:{
-       x:{...GS,grid:{display:false}},
-       y:{min:0,max:100,...GS,
-          title:{display:true,text:'Non-Sovereign Share (%)',color:'#5a7a5a',font:{size:10}},
-          ticks:{...GS.ticks,callback:v=>v+'%'}}
-     }}
-  );
-  // Country-level charts - filter to selected countries
+    {labels:YEARS, datasets:[{label:'Non-Sovereign Share (%)',
+      data:YEARS.map(y=>{const yr=W.filter(p=>p.y===y); return yr.length?+pct(cnt(yr,p=>p.t==='Non-Sovereign'),yr.length):0;}),
+      borderColor:P.lime,backgroundColor:P.lime+'25',fill:true,tension:0.35,pointRadius:4,pointBackgroundColor:P.lime,pointBorderColor:'#fff',pointBorderWidth:2}]},
+    {plugins:{legend:{display:false}}, scales:{x:{...GS,grid:{display:false}},y:{min:0,max:100,...GS,title:{display:true,text:'Non-Sovereign Share (%)',color:'#5a7a5a',font:{size:10}},ticks:{...GS.ticks,callback:v=>v+'%'}}}});
+
   mk('c-sov-country','bar',
-    {labels:cl,
-     datasets:[
-       {label:'Sovereign',data:cl.map(c=>BC[c]?.sov||0),backgroundColor:P.g1,borderRadius:2},
-       {label:'Non-Sovereign (NS)',data:cl.map(c=>BC[c]?.ns||0),backgroundColor:P.lime,borderRadius:2}
-     ]},
-    {plugins:{legend:{position:'bottom'}},
-     scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS}}}
-  );
+    {labels:cl, datasets:[
+      {label:'Sovereign',data:cl.map(c=>cnt(W,p=>p.c===c&&p.t==='Sovereign')),backgroundColor:P.g1,borderRadius:2},
+      {label:'Non-Sovereign (NS)',data:cl.map(c=>cnt(W,p=>p.c===c&&p.t==='Non-Sovereign')),backgroundColor:P.lime,borderRadius:2}
+    ]},
+    {plugins:{legend:{position:'bottom'}}, scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS}}});
+
   mk('c-ns-detail','bar',
-    {labels:cl,
-     datasets:[{label:'Non-Sovereign Projects',data:cl.map(c=>BC[c]?.ns||0),
-       backgroundColor:cl.map(c=>CC[c]),borderRadius:5}]},
-    {plugins:{legend:{display:false}},
-     scales:{x:{...GS,grid:{display:false}},y:{...GS}}}
-  );
+    {labels:cl, datasets:[{label:'Non-Sovereign Projects',data:cl.map(c=>cnt(W,p=>p.c===c&&p.t==='Non-Sovereign')),
+      backgroundColor:cl.map(c=>CC[c]),borderRadius:5}]},
+    {plugins:{legend:{display:false}}, scales:{x:{...GS,grid:{display:false}},y:{...GS}}});
 }
 
-// ── PAGE 5: LOCAL CURRENCY ────────────────────────────────
-function renderLC() {
-  const cl = activeCtries();
-  const isAll = AC.length===0;
-  const s = sc();
+// ══════════════════════════════════════════════════════════
+//  PAGE 5 : LOCAL CURRENCY
+// ══════════════════════════════════════════════════════════
+function renderLC(){
+  const W  = flt();
+  const cl = selCountries();
+  const withCur = W.filter(p=>p.cur);
 
-  // KPI cards
-  const lcPct2     = calcLCPct(cl);
-  const noChina    = cl.filter(c=>c!=='China');
-  const lcExclPct  = noChina.length>0 ? calcLCPct(noChina) : null;
-  // Top LC country in selection
-  const topLC = cl.slice().sort((a,b)=>(BC[b]?.lc_count||0)-(BC[a]?.lc_count||0))[0];
-  const topLCCount = topLC ? (BC[topLC]?.lc_count||0) : 0;
-  const topLCLabel = topLC==='China' ? 'Renminbi (RMB) Projects' : topLC ? topLC+' Local Currency Projects' : 'Local Currency Projects';
-  const topLCSub   = topLC==='China' ? "China's local currency leadership" : topLC ? topLC+"'s local currency projects" : '-';
-  setKPI('kv-lc', lcPct2+'%');
-  setKPI('ks-lc', +lcPct2>=30 ? '30% target - reached' : 'Progressing toward 30% strategic target');
-  setKPI('kl-lc-top', topLCLabel);
-  setKPI('kv-lc-top', topLCCount);
-  setKPI('ks-lc-top', topLCSub);
-  if (lcExclPct !== null) {
-    const exclLabel = cl.includes('China') ? 'Local Currency Share - Excluding China' : 'Local Currency Share - Selected Countries';
-    setKPI('kl-lc-excl', exclLabel);
-    setKPI('kv-lc-excl', lcExclPct+'%');
-    setKPI('ks-lc-excl', cl.includes('China') ? 'Headroom in non-China members' : 'Based on selected countries');
-  } else {
-    setKPI('kv-lc-excl', lcPct2+'%');
-    setKPI('ks-lc-excl', 'China not in current selection');
-  }
+  const lcPct = pct(cnt(W,isLC), withCur.length);
+  setKPI('kv-lc', lcPct+'%');
+  setKPI('ks-lc', +lcPct>=30 ? '30% target - reached' : 'Progressing toward 30% strategic target');
+  // top LC country
+  const topLC = cl.slice().sort((a,b)=>cnt(W,p=>p.c===b&&isLC(p))-cnt(W,p=>p.c===a&&isLC(p)))[0];
+  const topCnt = topLC ? cnt(W,p=>p.c===topLC&&isLC(p)) : 0;
+  setKPI('kl-lc-top', topLC==='China' ? 'Renminbi (RMB) Projects' : topLC ? topLC+' Local Currency Projects' : 'Local Currency Projects');
+  setKPI('kv-lc-top', topCnt);
+  setKPI('ks-lc-top', topLC==='China' ? "China's local currency leadership" : topLC ? topLC+"'s local currency projects" : '-');
+  // excl china
+  const nc = W.filter(p=>p.c!=='China'); const ncCur = nc.filter(p=>p.cur);
+  setKPI('kl-lc-excl', cl.includes('China') ? 'Local Currency Share - Excluding China' : 'Local Currency Share - Selected');
+  setKPI('kv-lc-excl', pct(cnt(nc,isLC), ncCur.length)+'%');
+  setKPI('ks-lc-excl', cl.includes('China') ? 'Headroom in non-China members' : 'Based on current view');
 
   const currs=['USD','RMB','EUR','ZAR','INR'];
   const cCol={USD:P.usd,RMB:P.rmb,EUR:P.eur,ZAR:P.zar,INR:P.inr};
   const cLbl={USD:'US Dollar (USD)',RMB:'Renminbi (RMB)',EUR:'Euro (EUR)',ZAR:'South African Rand (ZAR)',INR:'Indian Rupee (INR)'};
 
-  // Currency project count - derive from BC when filtered
-  let currCountData, currUSDData;
-  if (isAll) {
-    currCountData = currs.map(c=>BY_CURR[c]?.count||0);
-    currUSDData   = currs.map(c=>BY_CURR[c]?.ndb||0);
-  } else {
-    const rmb = cl.includes('China')        ? BC['China']?.lc_count||0 : 0;
-    const zar = cl.includes('South Africa') ? 6 : 0;
-    const inr = cl.includes('India')        ? 1 : 0;
-    const totalLC  = cl.reduce((t,c)=>t+(BC[c]?.lc_count||0),0);
-    const otherLC  = totalLC - rmb - zar - inr; // EUR, etc.
-    const eur      = Math.round((BY_CURR['EUR']?.count||0)*s);
-    const usd      = cl.reduce((t,c)=>t+(BC[c]?.hard_count||0),0) - eur;
-    currCountData  = [Math.max(0,usd), rmb, eur, zar, inr];
-
-    const rmbNDB = cl.includes('China')        ? BY_CURR['RMB']?.ndb||0 : 0;
-    const zarNDB = cl.includes('South Africa') ? BY_CURR['ZAR']?.ndb||0 : 0;
-    const inrNDB = cl.includes('India')        ? BY_CURR['INR']?.ndb||0 : 0;
-    const eurNDB = +((BY_CURR['EUR']?.ndb||0)*s).toFixed(1);
-    const usdNDB = +Math.max(0, cl.reduce((t,c)=>t+(BC[c]?.ndb||0),0) - rmbNDB - zarNDB - inrNDB - eurNDB).toFixed(1);
-    currUSDData  = [usdNDB, rmbNDB, eurNDB, zarNDB, inrNDB];
-  }
-
   mk('c-curr-count','bar',
-    {labels:currs.map(c=>cLbl[c]),
-     datasets:[{label:'Projects',data:currCountData,
-       backgroundColor:currs.map(c=>cCol[c]),borderRadius:5}]},
-    {indexAxis:'y',plugins:{legend:{display:false}},
-     scales:{x:{...GS},y:{...GS,grid:{display:false}}}}
-  );
+    {labels:currs.map(c=>cLbl[c]), datasets:[{label:'Projects',data:currs.map(cu=>cnt(W,p=>p.cur===cu)),
+      backgroundColor:currs.map(c=>cCol[c]),borderRadius:5}]},
+    {indexAxis:'y',plugins:{legend:{display:false}}, scales:{x:{...GS},y:{...GS,grid:{display:false}}}});
 
-  // LC vs Hard by country - filter to selected
   mk('c-lc-country','bar',
-    {labels:cl,
-     datasets:[
-       {label:'Local Currency',data:cl.map(c=>BC[c]?.lc_count||0),backgroundColor:P.lime,borderRadius:2},
-       {label:'Hard Currency (USD / EUR)',data:cl.map(c=>BC[c]?.hard_count||0),backgroundColor:P.g1,borderRadius:2}
-     ]},
-    {plugins:{legend:{position:'bottom'}},
-     scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS}}}
-  );
+    {labels:cl, datasets:[
+      {label:'Local Currency',data:cl.map(c=>cnt(W,p=>p.c===c&&isLC(p))),backgroundColor:P.lime,borderRadius:2},
+      {label:'Hard Currency (USD / EUR)',data:cl.map(c=>cnt(W,p=>p.c===c&&p.cur&&HARD.has(p.cur))),backgroundColor:P.g1,borderRadius:2}
+    ]},
+    {plugins:{legend:{position:'bottom'}}, scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS}}});
 
-  // LC trend - scale by s
-  const lcPcts=BY_YEAR.map(d=>{const t=d.lc+d.hard;return t?+(d.lc/t*100).toFixed(1):0;});
+  const lcPcts = YEARS.map(y=>{const yr=W.filter(p=>p.y===y&&p.cur); return yr.length?+pct(cnt(yr,isLC),yr.length):0;});
   mk('c-lc-trend','bar',
-    {labels:YEARS,
-     datasets:[
-       {type:'bar',label:'Local Currency',data:BY_YEAR.map(d=>+(d.lc*s).toFixed(1)),backgroundColor:P.lime,borderRadius:2,yAxisID:'y'},
-       {type:'bar',label:'Hard Currency',data:BY_YEAR.map(d=>+(d.hard*s).toFixed(1)),backgroundColor:P.g1,borderRadius:2,yAxisID:'y'},
-       {type:'line',label:'Local Currency Share (%)',data:lcPcts,borderColor:P.amber,backgroundColor:'transparent',
-        borderWidth:2.5,pointRadius:4,yAxisID:'y2',tension:0.3,pointBackgroundColor:P.amber,pointBorderColor:'#fff',pointBorderWidth:2},
-       {type:'line',label:'30% Strategic Target',data:YEARS.map(()=>30),borderColor:P.rose,
-        borderDash:[6,3],borderWidth:1.5,pointRadius:0,yAxisID:'y2',fill:false}
-     ]},
+    {labels:YEARS, datasets:[
+      {type:'bar',label:'Local Currency',data:YEARS.map(y=>cnt(W,p=>p.y===y&&isLC(p))),backgroundColor:P.lime,borderRadius:2,yAxisID:'y'},
+      {type:'bar',label:'Hard Currency',data:YEARS.map(y=>cnt(W,p=>p.y===y&&p.cur&&HARD.has(p.cur))),backgroundColor:P.g1,borderRadius:2,yAxisID:'y'},
+      {type:'line',label:'Local Currency Share (%)',data:lcPcts,borderColor:P.amber,backgroundColor:'transparent',borderWidth:2.5,pointRadius:4,yAxisID:'y2',tension:0.3,pointBackgroundColor:P.amber,pointBorderColor:'#fff',pointBorderWidth:2},
+      {type:'line',label:'30% Strategic Target',data:YEARS.map(()=>30),borderColor:P.rose,borderDash:[6,3],borderWidth:1.5,pointRadius:0,yAxisID:'y2',fill:false}
+    ]},
     {plugins:{legend:{position:'bottom',labels:{font:{size:10}}}},
-     scales:{
-       x:{stacked:true,...GS,grid:{display:false}},
-       y:{stacked:true,...GS,title:{display:true,text:'Projects',color:'#5a7a5a',font:{size:10}}},
-       y2:{position:'right',min:0,max:100,
-           ticks:{color:'#5a7a5a',font:{size:10},callback:v=>v+'%'},
-           grid:{display:false},
-           title:{display:true,text:'Local Currency Share (%)',color:'#5a7a5a',font:{size:10}}}
-     }}
-  );
+     scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS,title:{display:true,text:'Projects',color:'#5a7a5a',font:{size:10}}},
+       y2:{position:'right',min:0,max:100,ticks:{color:'#5a7a5a',font:{size:10},callback:v=>v+'%'},grid:{display:false},title:{display:true,text:'Local Currency Share (%)',color:'#5a7a5a',font:{size:10}}}}});
 
   mk('c-curr-usd','doughnut',
-    {labels:currs.map(c=>cLbl[c]),
-     datasets:[{data:currUSDData,
-       backgroundColor:currs.map(c=>cCol[c]),borderWidth:3,borderColor:'#fff',hoverOffset:6}]},
-    {plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}},cutout:'54%'}
-  );
+    {labels:currs.map(c=>cLbl[c]), datasets:[{data:currs.map(cu=>+sumUSD(nonCanc(W.filter(p=>p.cur===cu))).toFixed(1)),
+      backgroundColor:currs.map(c=>cCol[c]),borderWidth:3,borderColor:'#fff',hoverOffset:6}]},
+    {plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}},cutout:'54%'});
 }
 
-// ── PAGE 6: VELOCITY ──────────────────────────────────────
-function renderVelocity() {
-  const cl = activeCtries();
-  const isAll = AC.length===0;
-
-  // KPI cards
-  if (isAll) {
-    setKPI('kv-vel-median', '9 months');
-    setKPI('ks-vel-median', 'vs World Bank average of 18–24 months');
-    setKPI('kv-vel-count',  95);
-    setKPI('ks-vel-count',  'of 160 projects have recorded velocity');
-    setKPI('kv-vel-ns',     '6.8 months');
-    setKPI('ks-vel-ns',     'Faster than Sovereign processing');
-    setKPI('kv-vel-sov',    '10.7 months');
-    setKPI('ks-vel-sov',    'Concept-to-approval average');
-  } else {
-    const totalCount = cl.reduce((s,c)=>s+(BC[c]?.count||0), 0);
-    const withData   = cl.reduce((s,c)=>s+(VEL_C[c]?.with_data||0), 0);
-
-    // Weighted median by project count
-    const wtMedian = cl.reduce((s,c)=>s+(VEL_C[c]?.median||0)*(BC[c]?.count||0), 0);
-    const median   = totalCount>0 ? (wtMedian/totalCount).toFixed(1) : '-';
-
-    // Weighted NS avg by NS count
-    const totalNS  = cl.reduce((s,c)=>s+(BC[c]?.ns||0), 0);
-    const wtNS     = cl.reduce((s,c)=>s+(VEL_C[c]?.ns_avg||0)*(BC[c]?.ns||0), 0);
-    const nsAvg    = totalNS>0 ? (wtNS/totalNS).toFixed(1) : '-';
-
-    // Weighted SOV avg by SOV count
-    const totalSOV = cl.reduce((s,c)=>s+(BC[c]?.sov||0), 0);
-    const wtSOV    = cl.reduce((s,c)=>s+(VEL_C[c]?.sov_avg||0)*(BC[c]?.sov||0), 0);
-    const sovAvg   = totalSOV>0 ? (wtSOV/totalSOV).toFixed(1) : '-';
-
-    setKPI('kv-vel-median', median+' months');
-    setKPI('ks-vel-median', 'vs World Bank average of 18–24 months');
-    setKPI('kv-vel-count',  withData);
-    setKPI('ks-vel-count',  'of '+totalCount+' projects have recorded velocity');
-    setKPI('kv-vel-ns',     nsAvg+' months');
-    setKPI('ks-vel-ns',     'Faster than Sovereign processing');
-    setKPI('kv-vel-sov',    sovAvg+' months');
-    setKPI('ks-vel-sov',    'Concept-to-approval average');
-  }
+// ══════════════════════════════════════════════════════════
+//  PAGE 6 : APPROVAL VELOCITY
+// ══════════════════════════════════════════════════════════
+function renderVelocity(){
+  const W  = flt();
+  const vAll = W.filter(p=>typeof p.v==='number');
+  const med = median(vAll.map(p=>p.v));
+  const nsV = vAll.filter(p=>p.t==='Non-Sovereign').map(p=>p.v);
+  const sovV = vAll.filter(p=>p.t==='Sovereign').map(p=>p.v);
+  setKPI('kv-vel-median', med!=null ? med.toFixed(1)+' months' : '—');
+  setKPI('ks-vel-median', 'vs World Bank average of 18–24 months');
+  setKPI('kv-vel-count', vAll.length);
+  setKPI('ks-vel-count', 'of '+W.length+' projects have recorded velocity');
+  setKPI('kv-vel-ns', nsV.length ? mean(nsV).toFixed(1)+' months' : '—');
+  setKPI('ks-vel-ns', 'Faster than Sovereign processing');
+  setKPI('kv-vel-sov', sovV.length ? mean(sovV).toFixed(1)+' months' : '—');
+  setKPI('ks-vel-sov', 'Concept-to-approval average');
 
   mk('c-vel-year','line',
-    {labels:VEL_YEAR.map(d=>d.yr),
-     datasets:[{label:'Average Months',data:VEL_YEAR.map(d=>d.avg),
-       borderColor:P.g2,backgroundColor:P.g2+'18',fill:true,tension:0.35,
-       pointRadius:5,pointBackgroundColor:P.g2,pointBorderColor:'#fff',pointBorderWidth:2}]},
-    {plugins:{legend:{display:false}},
-     scales:{
-       x:{...GS,grid:{display:false}},
-       y:{...GS,title:{display:true,text:'Months from Concept to Approval',color:'#5a7a5a',font:{size:10}}}
-     }}
-  );
+    {labels:YEARS, datasets:[{label:'Average Months',
+      data:YEARS.map(y=>{const a=vAll.filter(p=>p.y===y).map(p=>p.v); return a.length?+mean(a).toFixed(1):null;}),
+      borderColor:P.g2,backgroundColor:P.g2+'18',fill:true,tension:0.35,spanGaps:true,
+      pointRadius:5,pointBackgroundColor:P.g2,pointBorderColor:'#fff',pointBorderWidth:2}]},
+    {plugins:{legend:{display:false}}, scales:{x:{...GS,grid:{display:false}},y:{...GS,title:{display:true,text:'Months from Concept to Approval',color:'#5a7a5a',font:{size:10}}}}});
+
   mk('c-vel-type','bar',
-    {labels:['Non-Sovereign (NS)','Sovereign'],
-     datasets:[{label:'Average Months',data:[6.8,10.7],
-       backgroundColor:[P.lime,P.g2],borderRadius:6}]},
-    {indexAxis:'y',plugins:{legend:{display:false}},
-     scales:{x:{...GS,min:0,max:15},y:{...GS,grid:{display:false}}}}
-  );
+    {labels:['Non-Sovereign (NS)','Sovereign'], datasets:[{label:'Average Months',
+      data:[nsV.length?+mean(nsV).toFixed(1):0, sovV.length?+mean(sovV).toFixed(1):0], backgroundColor:[P.lime,P.g2],borderRadius:6}]},
+    {indexAxis:'y',plugins:{legend:{display:false}}, scales:{x:{...GS,min:0,max:15},y:{...GS,grid:{display:false}}}});
+
+  const bins={'0–3 months':0,'3–6 months':0,'6–12 months':0,'12–24 months':0,'24+ months':0};
+  vAll.forEach(p=>{ const v=p.v; if(v<3)bins['0–3 months']++; else if(v<6)bins['3–6 months']++; else if(v<12)bins['6–12 months']++; else if(v<24)bins['12–24 months']++; else bins['24+ months']++; });
   mk('c-vel-bins','bar',
-    {labels:Object.keys(VEL_BINS),
-     datasets:[{label:'Projects',data:Object.values(VEL_BINS),
-       backgroundColor:[P.lime2,P.g3,P.g2,P.g1,'#334155'],borderRadius:5}]},
-    {plugins:{legend:{display:false}},
-     scales:{x:{...GS,grid:{display:false}},y:{...GS}}}
-  );
+    {labels:Object.keys(bins), datasets:[{label:'Projects',data:Object.values(bins),
+      backgroundColor:[P.lime2,P.g3,P.g2,P.g1,'#334155'],borderRadius:5}]},
+    {plugins:{legend:{display:false}}, scales:{x:{...GS,grid:{display:false}},y:{...GS}}});
 }
 
-// ── PAGE 7: RUSSIA ────────────────────────────────────────
-function renderRussia() {
-  mk('c-russia-stack','bar',
-    {labels:YEARS,
-     datasets:[
-       {label:'Russia',data:BY_YEAR.map(d=>d.russia),backgroundColor:P.rose,borderRadius:2},
-       {label:'Other Members',data:BY_YEAR.map(d=>d.count-d.russia),backgroundColor:P.g4,borderRadius:2}
-     ]},
-    {plugins:{legend:{position:'bottom'}},
-     scales:{x:{stacked:true,...GS,grid:{display:false}},y:{stacked:true,...GS}}}
-  );
-  const rS=Object.keys(R_SECTORS).filter(s=>R_SECTORS[s]>0);
-  mk('c-russia-sector','doughnut',
-    {labels:rS,
-     datasets:[{data:rS.map(s=>R_SECTORS[s]),
-       backgroundColor:rS.map(s=>SC[s]||P.g3),borderWidth:3,borderColor:'#fff',hoverOffset:5}]},
-    {plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}},cutout:'46%'}
-  );
-  mk('c-russia-type','doughnut',
-    {labels:['Sovereign','Non-Sovereign (NS)','Technical Assistance (TA)'],
-     datasets:[{data:[8,9,1],backgroundColor:[P.g1,P.lime,P.amber],borderWidth:3,borderColor:'#fff',hoverOffset:5}]},
-    {plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}},cutout:'46%'}
-  );
-  const top3=( BC['China']?.ndb||0)+(BC['India']?.ndb||0)+(BC['Brazil']?.ndb||0);
-  const other=(BC['Russia']?.ndb||0)+(BC['South Africa']?.ndb||0);
-  mk('c-concentration','doughnut',
-    {labels:['China, India & Brazil','Russia & South Africa'],
-     datasets:[{data:[Math.round(top3),Math.round(other)],
-       backgroundColor:[P.g1,P.g5],borderWidth:3,borderColor:'#fff',hoverOffset:5}]},
-    {plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}},cutout:'50%'}
-  );
+// ══════════════════════════════════════════════════════════
+//  PAGE 8 : STRATEGIC INSIGHTS (observations only)
+// ══════════════════════════════════════════════════════════
+function renderInsights(){
+  const W = PROJECTS;  // full portfolio (filters do not apply on this tab)
+  const total = W.length || 1;
+  const Wnc = nonCanc(W);
+  const ndbTot = sumUSD(Wnc) || 1;
+  const top3 = sumUSD(nonCanc(W.filter(p=>['China','India','Brazil'].includes(p.c))));
+  const top3pct = pct(top3, ndbTot);
+  const clim = cnt(W,p=>p.cl==='Climate-Aligned'); const climPct = +pct(clim, total);
+  const climDiff = (climPct-40).toFixed(1);
+  const secCounts = SECTORS.map(s=>[s, cnt(W,p=>p.s===s)]).sort((a,b)=>b[1]-a[1]);
+  const topSec = secCounts[0][0], topSecN = secCounts[0][1];
+  const vAll = W.filter(p=>typeof p.v==='number'); const med = median(vAll.map(p=>p.v));
+  const nsV = vAll.filter(p=>p.t==='Non-Sovereign').map(p=>p.v); const sovV = vAll.filter(p=>p.t==='Sovereign').map(p=>p.v);
+  const nsAvg = nsV.length?mean(nsV).toFixed(1):'—', sovAvg = sovV.length?mean(sovV).toFixed(1):'—';
+  const canc = cnt(W,p=>p.st==='Cancelled'); const cancPct = pct(canc, total);
+  const nsTot = cnt(W,p=>p.t==='Non-Sovereign'); const nsPct = pct(nsTot, total);
+  const y25 = W.filter(p=>p.y===2025); const ns25 = y25.length?pct(cnt(y25,p=>p.t==='Non-Sovereign'),y25.length):'—';
+  const withCur = W.filter(p=>p.cur); const lcArr = W.filter(isLC); const lcPct = pct(lcArr.length, withCur.length);
+  const rmb = cnt(W,p=>p.cur==='RMB');
+  const st = {}; STATUSES.forEach(s=>st[s]=cnt(W,p=>p.st===s));
+
+  const cards = [
+    {k:'a', topic:'Geographic Concentration', stat:top3pct+'%',
+     text:'China, India and Brazil account for '+top3pct+'% of commitments ($'+Math.round(top3).toLocaleString()+'M of $'+Math.round(ndbTot).toLocaleString()+'M).'},
+    {k:'b', topic:'Climate Alignment', stat:climPct.toFixed(1)+'%',
+     text:clim+' of '+total+' projects are climate-aligned, '+Math.abs(climDiff)+' pp '+(climPct>=40?'above':'below')+' the 40% target.'},
+    {k:'d', topic:'Largest Sector', stat:topSec+' · '+pct(topSecN,total)+'%',
+     text:topSecN+' projects — the single largest sector by project count.'},
+    {k:'b', topic:'Approval Velocity', stat:(med!=null?med.toFixed(1):'—')+' mo',
+     text:'Median concept-to-approval. Non-Sovereign clears in '+nsAvg+' mo vs '+sovAvg+' mo for Sovereign.'},
+    {k:'c', topic:'Cancellation Rate', stat:cancPct+'%',
+     text:canc+' of '+total+' projects in the portfolio were cancelled.'},
+    {k:'a', topic:'Non-Sovereign Lending', stat:nsPct+'%',
+     text:'Non-Sovereign share of the portfolio; '+ns25+(ns25!=='—'?'%':'')+' of 2025 approvals were Non-Sovereign.'},
+    {k:'c', topic:'Local Currency Mix', stat:lcPct+'%',
+     text:'Local-currency share of lending; '+rmb+' of '+lcArr.length+' local-currency loans are Renminbi.'},
+    {k:'d', topic:'Pipeline Status', stat:st.Approved+' approved',
+     text:st.Completed+' completed, '+st.Proposed+' proposed, '+st.Cancelled+' cancelled.'}
+  ];
+  const el = document.getElementById('insights-cards');
+  if(el) el.innerHTML = cards.map(c=>
+    '<div class="ins-card '+c.k+'"><div class="ins-topic">'+c.topic+'</div><div class="ins-stat">'+c.stat+'</div><div class="ins-text">'+c.text+'</div></div>'
+  ).join('');
 }
 
-// ── INIT ──────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', ()=>renderOverview());
+// ══════════════════════════════════════════════════════════
+//  HEADER PILLS + INIT
+// ══════════════════════════════════════════════════════════
+function setHeaderPills(){
+  const nc = nonCanc(PROJECTS);
+  setKPI('hp-ndb', '$'+(sumUSD(nc)/1000).toFixed(1)+'B');
+  setKPI('hp-active', cnt(PROJECTS,p=>p.st!=='Cancelled'&&p.st!=='Completed'));
+  setKPI('hp-climate', pct(cnt(PROJECTS,p=>p.cl==='Climate-Aligned'),PROJECTS.length)+'%');
+  const med = median(PROJECTS.filter(p=>typeof p.v==='number').map(p=>p.v));
+  setKPI('hp-vel', (med!=null?Math.round(med):'-')+' mo');
+}
+window.addEventListener('DOMContentLoaded', ()=>{ setHeaderPills(); renderOverview(); });
 </script>
 </body>
 </html>
